@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B98D28FA2BB4CC9E0071BDF7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */; };
+		B98D29AA2BB4DAFD0071BDF7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B98D29A92BB4DAFD0071BDF7 /* FirebaseAnalytics */; };
+		B98D29AC2BB4DAFD0071BDF7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B98D29AB2BB4DAFD0071BDF7 /* FirebaseAuth */; };
+		B98D29AE2BB4DAFD0071BDF7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B98D29AD2BB4DAFD0071BDF7 /* FirebaseFirestore */; };
+		B9947F5E2BB567720061619E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9947F5D2BB567720061619E /* SignUpViewController.swift */; };
 		B9F9F9E12BB4C52100CB078E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */; };
 		B9F9F9E32BB4C52100CB078E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */; };
 		B9F9F9E52BB4C52100CB078E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E42BB4C52100CB078E /* ViewController.swift */; };
@@ -16,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B9947F5D2BB567720061619E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B9F9F9DD2BB4C52100CB078E /* Online Wordle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Online Wordle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,17 +38,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B98D29AA2BB4DAFD0071BDF7 /* FirebaseAnalytics in Frameworks */,
+				B98D29AC2BB4DAFD0071BDF7 /* FirebaseAuth in Frameworks */,
+				B98D29AE2BB4DAFD0071BDF7 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B98D29A82BB4DAFD0071BDF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B9F9F9D42BB4C52100CB078E = {
 			isa = PBXGroup;
 			children = (
 				B9F9F9DF2BB4C52100CB078E /* Online Wordle */,
 				B9F9F9DE2BB4C52100CB078E /* Products */,
+				B98D29A82BB4DAFD0071BDF7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,9 +78,11 @@
 				B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */,
 				B9F9F9E42BB4C52100CB078E /* ViewController.swift */,
 				B9F9F9E62BB4C52100CB078E /* Main.storyboard */,
+				B9947F5D2BB567720061619E /* SignUpViewController.swift */,
 				B9F9F9E92BB4C52300CB078E /* Assets.xcassets */,
 				B9F9F9EB2BB4C52300CB078E /* LaunchScreen.storyboard */,
 				B9F9F9EE2BB4C52300CB078E /* Info.plist */,
+				B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */,
 			);
 			path = "Online Wordle";
 			sourceTree = "<group>";
@@ -83,6 +103,11 @@
 			dependencies = (
 			);
 			name = "Online Wordle";
+			packageProductDependencies = (
+				B98D29A92BB4DAFD0071BDF7 /* FirebaseAnalytics */,
+				B98D29AB2BB4DAFD0071BDF7 /* FirebaseAuth */,
+				B98D29AD2BB4DAFD0071BDF7 /* FirebaseFirestore */,
+			);
 			productName = "Online Wordle";
 			productReference = B9F9F9DD2BB4C52100CB078E /* Online Wordle.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +136,9 @@
 				Base,
 			);
 			mainGroup = B9F9F9D42BB4C52100CB078E;
+			packageReferences = (
+				B98D28FB2BB4D2DB0071BDF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = B9F9F9DE2BB4C52100CB078E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9F9F9ED2BB4C52300CB078E /* LaunchScreen.storyboard in Resources */,
+				B98D28FA2BB4CC9E0071BDF7 /* GoogleService-Info.plist in Resources */,
 				B9F9F9EA2BB4C52300CB078E /* Assets.xcassets in Resources */,
 				B9F9F9E82BB4C52100CB078E /* Main.storyboard in Resources */,
 			);
@@ -140,6 +169,7 @@
 			files = (
 				B9F9F9E52BB4C52100CB078E /* ViewController.swift in Sources */,
 				B9F9F9E12BB4C52100CB078E /* AppDelegate.swift in Sources */,
+				B9947F5E2BB567720061619E /* SignUpViewController.swift in Sources */,
 				B9F9F9E32BB4C52100CB078E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +330,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -328,6 +359,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -363,6 +395,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B98D28FB2BB4D2DB0071BDF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.23.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B98D29A92BB4DAFD0071BDF7 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B98D28FB2BB4D2DB0071BDF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		B98D29AB2BB4DAFD0071BDF7 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B98D28FB2BB4D2DB0071BDF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B98D29AD2BB4DAFD0071BDF7 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B98D28FB2BB4D2DB0071BDF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B9F9F9D52BB4C52100CB078E /* Project object */;
 }
