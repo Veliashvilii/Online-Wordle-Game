@@ -35,6 +35,8 @@ class SignUpViewController: UIViewController {
                         self.showErrorMessage(title: "Error", message: error?.localizedDescription ?? "Unavailable Server, Please Try Again!")
                     } else {
                         //self.performSegue(withIdentifier: "tologinVC", sender: nil)
+                        self.showErrorMessage(title: "Cong..!", message: "Your Account is Created")
+                        print("Üyelik İşlemi tamamlandı!")
                     }
                 }
             } else {

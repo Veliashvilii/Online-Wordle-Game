@@ -28,7 +28,6 @@ class ViewController: UIViewController {
                 if error != nil {
                     self.showErrorMessage(title: "Error", message: error?.localizedDescription ?? "Unavailable Server, Please Try Again!")
                 } else {
-                   // self.performSegue(withIdentifier: "toMainVC", sender: nil)
                     print("It's time for login")
                     self.performSegue(withIdentifier: "totabBarVC", sender: nil)
                 }
