@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 class ViewController: UIViewController {
 
@@ -24,18 +25,25 @@ class ViewController: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         if emailTextField.text != "" && passwordTextField.text != "" {
-            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { authDataResult, error in
-                if error != nil {
-                    self.showErrorMessage(title: "Error", message: error?.localizedDescription ?? "Unavailable Server, Please Try Again!")
+            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { [self] authDataResult, error in
+                if let error = error {
+                    self.showErrorMessage(title: "Error", message: error.localizedDescription)
                 } else {
                     print("It's time for login")
-                    self.performSegue(withIdentifier: "totabBarVC", sender: nil)
+                    self.setActiveUser(email: emailTextField.text!) { error in
+                        if let error = error {
+                            self.showErrorMessage(title: "Error", message: "Failed to set active user: \(error.localizedDescription)")
+                        } else {
+                            self.performSegue(withIdentifier: "totabBarVC", sender: nil)
+                        }
+                    }
                 }
             }
         } else {
             self.showErrorMessage(title: "Error", message: "Please fill all blanks!")
         }
     }
+
     
     func showErrorMessage(title: String, message: String){
         let errorVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -43,6 +51,21 @@ class ViewController: UIViewController {
         errorVc.addAction(okButton)
         self.present(errorVc, animated: true, completion: nil)
     }
+    
+    func setActiveUser(email: String, completion: @escaping (Error?) -> Void) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(email)
+        userRef.updateData(["isActive": true]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+                completion(error)
+            } else {
+                print("Document successfully updated")
+                completion(nil)
+            }
+        }
+    }
+
     
 
 }

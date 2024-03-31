@@ -7,6 +7,8 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
+
 
 class SignUpViewController: UIViewController {
 
@@ -28,14 +30,20 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func signUpButtonTapped(_ sender: Any) {
+        //When users try the sign up the app
         if emailTextField.text != "" && usernameTextField.text != "" && passwordTextField.text != "" && passwordAgainTextField.text != "" {
             if passwordTextField.text == passwordAgainTextField.text {
                 Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { authDataResult, error in
                     if error != nil {
                         self.showErrorMessage(title: "Error", message: error?.localizedDescription ?? "Unavailable Server, Please Try Again!")
                     } else {
-                        //self.performSegue(withIdentifier: "tologinVC", sender: nil)
+                        let user = User(email: self.emailTextField.text!, username: self.usernameTextField.text!, password: self.passwordTextField.text!, isActive: false)
+                        self.saveUserToDatabase(user: user) // for save to storage
                         self.showErrorMessage(title: "Cong..!", message: "Your Account is Created")
+                        self.emailTextField.text = ""
+                        self.usernameTextField.text = ""
+                        self.passwordTextField.text = ""
+                        self.passwordAgainTextField.text = ""
                         print("Üyelik İşlemi tamamlandı!")
                     }
                 }
@@ -54,14 +62,13 @@ class SignUpViewController: UIViewController {
         self.present(errorVc, animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func saveUserToDatabase(user: User){
+        let db = Firestore.firestore()
+        do {
+            try db.collection("users").document(user.email).setData(from: user)
+        } catch let error {
+          print("Error writing city to Firestore: \(error)")
+        }
     }
-    */
 
 }
