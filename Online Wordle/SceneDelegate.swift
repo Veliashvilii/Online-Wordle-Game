@@ -28,6 +28,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
+        self.setIsActiveUser(email: Auth.auth().currentUser!.email!, isActive: false) { error in
+            if error != nil {
+                print("User is Still Active!")
+            } else {
+                print("User is Passive Now!")
+            }
+        }
+        
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -43,12 +51,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        self.setIsActiveUser(email: Auth.auth().currentUser!.email!, isActive: true) { error in
+            if error != nil {
+                print("User is Still Active!")
+            } else {
+                print("User is Passive Now!")
+            }
+        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+        self.setIsActiveUser(email: Auth.auth().currentUser!.email!, isActive: false) { error in
+            if error != nil {
+                print("User is Still Active!")
+            } else {
+                print("User is Passive Now!")
+            }
+        }
     }
+    
+    func setIsActiveUser(email: String, isActive: Bool ,completion: @escaping (Error?) -> Void) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(email)
+        userRef.updateData(["isActive": isActive]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+                completion(error)
+            } else {
+                print("Document successfully updated")
+                completion(nil)
+            }
+        }
+    }
+    
 }
 
