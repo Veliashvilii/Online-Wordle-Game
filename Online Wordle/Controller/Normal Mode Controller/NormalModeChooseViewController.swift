@@ -11,22 +11,40 @@ import FirebaseFirestore
 
 class NormalModeChooseViewController: UIViewController {
     
+    private var gameMode: Int = 0
+    
     @IBAction func fourLetterRoomTapped(_ sender: Any) {
-        loginToRoom(roomType: 4)
+        self.gameMode = 4
+        loginToRoom(roomType: self.gameMode)
+        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
     }
     
     @IBAction func fiveLetterRoomTapped(_ sender: Any) {
-        loginToRoom(roomType: 5)
+        self.gameMode = 5
+        loginToRoom(roomType: self.gameMode)
+        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
     }
     
     
     @IBAction func sixLetterRoomTapped(_ sender: Any) {
-        loginToRoom(roomType: 6)
+        self.gameMode = 6
+        loginToRoom(roomType: self.gameMode)
+        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
     }
     
     
     @IBAction func sevenLetterButtonTapped(_ sender: Any) {
-        loginToRoom(roomType: 7)
+        self.gameMode = 7
+        loginToRoom(roomType: self.gameMode)
+        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNormalModeUserVC" {
+            if let destination = segue.destination as? NormalModeUserViewController {
+                destination.gameMode = self.gameMode
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -43,7 +61,7 @@ class NormalModeChooseViewController: UIViewController {
                     
                     if let userData = document.data(), let username = userData["username"] as? String {
                         print("Kullanıcı Adı: \(username)")
-                        var user = UserForRooms(email: email, username: username)
+                        let user = UserForRooms(email: email, username: username)
                         do {
                             try db.collection("Modes").document("Normal Mode").collection("\(roomType) Letters").document(email).setData(from: user)
                         } catch let error {

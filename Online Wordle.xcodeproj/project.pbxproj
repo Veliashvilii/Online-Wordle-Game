@@ -18,6 +18,7 @@
 		B9C987AB2BBA1977002B77D2 /* RandomLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C987AA2BBA1977002B77D2 /* RandomLetterViewController.swift */; };
 		B9C987AD2BBA1BE0002B77D2 /* GameModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C987AC2BBA1BE0002B77D2 /* GameModeViewController.swift */; };
 		B9DC0F8D2BB983FA00D1B8A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC0F8C2BB983FA00D1B8A6 /* User.swift */; };
+		B9E3B73C2BBB45E200B661F4 /* NormalModeUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E3B73B2BBB45E200B661F4 /* NormalModeUserViewController.swift */; };
 		B9F9F9E12BB4C52100CB078E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */; };
 		B9F9F9E32BB4C52100CB078E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */; };
 		B9F9F9E52BB4C52100CB078E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E42BB4C52100CB078E /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 		B9C987AA2BBA1977002B77D2 /* RandomLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomLetterViewController.swift; sourceTree = "<group>"; };
 		B9C987AC2BBA1BE0002B77D2 /* GameModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModeViewController.swift; sourceTree = "<group>"; };
 		B9DC0F8C2BB983FA00D1B8A6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B9E3B73B2BBB45E200B661F4 /* NormalModeUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalModeUserViewController.swift; sourceTree = "<group>"; };
 		B9F9F9DD2BB4C52100CB078E /* Online Wordle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Online Wordle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
 		B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				B930366A2BBAF5B000B03FCC /* NormalModeChooseViewController.swift */,
+				B9E3B73B2BBB45E200B661F4 /* NormalModeUserViewController.swift */,
 			);
 			path = "Normal Mode Controller";
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				B9F9F9E52BB4C52100CB078E /* ViewController.swift in Sources */,
 				B9F9F9E12BB4C52100CB078E /* AppDelegate.swift in Sources */,
 				B930366B2BBAF5B000B03FCC /* NormalModeChooseViewController.swift in Sources */,
+				B9E3B73C2BBB45E200B661F4 /* NormalModeUserViewController.swift in Sources */,
 				B930366D2BBAFCC200B03FCC /* Room.swift in Sources */,
 				B9DC0F8D2BB983FA00D1B8A6 /* User.swift in Sources */,
 				B9947F5E2BB567720061619E /* SignUpViewController.swift in Sources */,
