@@ -13,3 +13,8 @@ public struct User: Codable {
     let password: String
     let isActive: Bool
 }
+
+public struct UserForRooms: Codable {
+    let email: String
+    let username: String
+}
