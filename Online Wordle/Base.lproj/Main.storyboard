@@ -54,7 +54,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Login">
                                     <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="1" green="0.3085305392742157" blue="0.29609328508377075" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="1" green="0.30980392156862746" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
@@ -175,34 +175,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00z-T1-AsB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1785" y="773"/>
-        </scene>
-        <!--Normal Mode-->
-        <scene sceneID="WYH-HO-6Rj">
-            <objects>
-                <viewController id="zax-qu-H1G" customClass="ViewController" customModule="Online_Wordle" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="a8Q-Ca-2gd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="elips-2" translatesAutoresizingMaskIntoConstraints="NO" id="1Zy-hp-Idn">
-                                <rect key="frame" x="-57" y="0.0" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="IQ6-81-t03"/>
-                        <color key="backgroundColor" red="0.91730314493179321" green="0.96223026514053345" blue="0.83558088541030884" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Normal Mode" image="pencil" catalog="system" id="wdj-U8-7Bn"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0JR-TO-cSu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1785" y="-3"/>
+            <point key="canvasLocation" x="1918" y="481"/>
         </scene>
         <!--Random Letter-->
         <scene sceneID="JVQ-K0-dA1">
             <objects>
-                <viewController id="Dsp-Md-H5F" sceneMemberID="viewController">
+                <viewController id="Dsp-Md-H5F" customClass="GameModeViewController" customModule="Online_Wordle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g2y-jI-Qy9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -211,6 +189,37 @@
                                 <rect key="frame" x="-57" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cki-qL-R4G">
+                                <rect key="frame" x="74" y="210" width="240" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Random Letter Mode">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="1" green="0.30980392156862746" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="randomLetterButtonTapped:" destination="Dsp-Md-H5F" eventType="touchUpInside" id="TRz-pc-iGk"/>
+                                    <segue destination="yzL-6c-o55" kind="presentation" identifier="toRandomLetterModeVC" modalPresentationStyle="fullScreen" id="OkO-Mv-mk3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0H-av-aKA">
+                                <rect key="frame" x="74" y="423" width="240" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Normal Game Mode">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="1" green="0.30980392159999998" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="normalLetterButtonTapped:" destination="Dsp-Md-H5F" eventType="touchUpInside" id="qfS-Xb-gI3"/>
+                                    <action selector="randomLetterButtonTapped:" destination="Dsp-Md-H5F" eventType="touchUpInside" id="CSR-XB-gHV"/>
+                                    <segue destination="yzL-6c-o55" kind="presentation" identifier="toNormalModeVC" modalPresentationStyle="fullScreen" id="qo2-a7-hko"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yU2-J5-1mB"/>
                         <color key="backgroundColor" red="0.91730314493179321" green="0.96223026514053345" blue="0.83558088541030884" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -219,7 +228,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSn-L9-RAU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1785" y="-853"/>
+            <point key="canvasLocation" x="1918" y="-398"/>
+        </scene>
+        <!--Random Letter View Controller-->
+        <scene sceneID="sSh-po-FWi">
+            <objects>
+                <tableViewController id="yzL-6c-o55" customClass="RandomLetterViewController" customModule="Online_Wordle" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="gCP-or-T80">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="randomLetterUser" id="h7z-Z4-9Zx">
+                                <rect key="frame" x="0.0" y="50" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="h7z-Z4-9Zx" id="xdD-n1-xp8">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="yzL-6c-o55" id="rbt-U8-8zW"/>
+                            <outlet property="delegate" destination="yzL-6c-o55" id="A2H-tP-g3D"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="fll-cG-jYb"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IQz-OQ-RMa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3049" y="-398"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="DeJ-Gr-kNI">
@@ -233,7 +271,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="Dsp-Md-H5F" kind="relationship" relationship="viewControllers" id="WrQ-ys-7WW"/>
-                        <segue destination="zax-qu-H1G" kind="relationship" relationship="viewControllers" id="hlU-ih-595"/>
                         <segue destination="ASj-qW-0cz" kind="relationship" relationship="viewControllers" id="lvc-oa-Mo9"/>
                     </connections>
                 </tabBarController>
@@ -379,6 +416,9 @@
             <point key="canvasLocation" x="57" y="838"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="qo2-a7-hko"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="elips-2" width="100" height="100"/>
         <image name="envelope.circle.fill" catalog="system" width="128" height="123"/>
@@ -386,13 +426,15 @@
         <image name="lock" catalog="system" width="125" height="128"/>
         <image name="lock.open" catalog="system" width="128" height="110"/>
         <image name="loginScreen 1" width="130" height="225"/>
-        <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="108"/>
         <image name="signup" width="751.57000732421875" height="539.41998291015625"/>
         <image name="square.and.arrow.down" catalog="system" width="112" height="128"/>
         <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

@@ -13,6 +13,8 @@
 		B98D29AE2BB4DAFD0071BDF7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B98D29AD2BB4DAFD0071BDF7 /* FirebaseFirestore */; };
 		B9947F5E2BB567720061619E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9947F5D2BB567720061619E /* SignUpViewController.swift */; };
 		B9947F602BB5A51A0061619E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9947F5F2BB5A51A0061619E /* SettingsViewController.swift */; };
+		B9C987AB2BBA1977002B77D2 /* RandomLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C987AA2BBA1977002B77D2 /* RandomLetterViewController.swift */; };
+		B9C987AD2BBA1BE0002B77D2 /* GameModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C987AC2BBA1BE0002B77D2 /* GameModeViewController.swift */; };
 		B9DC0F8D2BB983FA00D1B8A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DC0F8C2BB983FA00D1B8A6 /* User.swift */; };
 		B9F9F9E12BB4C52100CB078E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */; };
 		B9F9F9E32BB4C52100CB078E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */; };
@@ -26,9 +28,11 @@
 		B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9947F5D2BB567720061619E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B9947F5F2BB5A51A0061619E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B9C987AA2BBA1977002B77D2 /* RandomLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomLetterViewController.swift; sourceTree = "<group>"; };
+		B9C987AC2BBA1BE0002B77D2 /* GameModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModeViewController.swift; sourceTree = "<group>"; };
 		B9DC0F8C2BB983FA00D1B8A6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B9F9F9DD2BB4C52100CB078E /* Online Wordle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Online Wordle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
 		B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B9F9F9E42BB4C52100CB078E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B9F9F9E72BB4C52100CB078E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +62,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B9C987A72BB9FDEC002B77D2 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */,
+				B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		B9C987A82BB9FE03002B77D2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B9C987A92BB9FE1F002B77D2 /* Models */,
+				B9F9F9E42BB4C52100CB078E /* ViewController.swift */,
+				B9947F5F2BB5A51A0061619E /* SettingsViewController.swift */,
+				B9947F5D2BB567720061619E /* SignUpViewController.swift */,
+				B9C987AA2BBA1977002B77D2 /* RandomLetterViewController.swift */,
+				B9C987AC2BBA1BE0002B77D2 /* GameModeViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B9C987A92BB9FE1F002B77D2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B9DC0F8C2BB983FA00D1B8A6 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		B9F9F9D42BB4C52100CB078E = {
 			isa = PBXGroup;
 			children = (
@@ -78,15 +112,11 @@
 		B9F9F9DF2BB4C52100CB078E /* Online Wordle */ = {
 			isa = PBXGroup;
 			children = (
-				B9F9F9E02BB4C52100CB078E /* AppDelegate.swift */,
-				B9F9F9E22BB4C52100CB078E /* SceneDelegate.swift */,
-				B9F9F9E42BB4C52100CB078E /* ViewController.swift */,
+				B9C987A82BB9FE03002B77D2 /* Controller */,
+				B9C987A72BB9FDEC002B77D2 /* Delegates */,
 				B9F9F9E62BB4C52100CB078E /* Main.storyboard */,
-				B9947F5F2BB5A51A0061619E /* SettingsViewController.swift */,
-				B9947F5D2BB567720061619E /* SignUpViewController.swift */,
-				B9DC0F8C2BB983FA00D1B8A6 /* User.swift */,
-				B9F9F9E92BB4C52300CB078E /* Assets.xcassets */,
 				B9F9F9EB2BB4C52300CB078E /* LaunchScreen.storyboard */,
+				B9F9F9E92BB4C52300CB078E /* Assets.xcassets */,
 				B9F9F9EE2BB4C52300CB078E /* Info.plist */,
 				B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */,
 			);
@@ -173,10 +203,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9C987AB2BBA1977002B77D2 /* RandomLetterViewController.swift in Sources */,
 				B9F9F9E52BB4C52100CB078E /* ViewController.swift in Sources */,
 				B9F9F9E12BB4C52100CB078E /* AppDelegate.swift in Sources */,
 				B9DC0F8D2BB983FA00D1B8A6 /* User.swift in Sources */,
 				B9947F5E2BB567720061619E /* SignUpViewController.swift in Sources */,
+				B9C987AD2BBA1BE0002B77D2 /* GameModeViewController.swift in Sources */,
 				B9947F602BB5A51A0061619E /* SettingsViewController.swift in Sources */,
 				B9F9F9E32BB4C52100CB078E /* SceneDelegate.swift in Sources */,
 			);

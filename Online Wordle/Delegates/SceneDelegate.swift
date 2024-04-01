@@ -51,6 +51,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+       // let currentUser = Auth.auth().currentUser
+       // if let email = currentUser?.email {
+        //    print("Email: \(email)")
+        //}
         self.setIsActiveUser(email: Auth.auth().currentUser!.email!, isActive: true) { error in
             if error != nil {
                 print("User is Still Active!")
