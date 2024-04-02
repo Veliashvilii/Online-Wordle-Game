@@ -5,23 +5,19 @@ import FirebaseFirestore
 class NormalModeUserViewController: UITableViewController {
     
     var gameMode: Int?
-    var currentUsername: String?
+    var username: String?
     var users = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         let gameMode = self.gameMode!
-        print(gameMode)
 
         Task {
             do {
-                // Asenkron fonksiyonu çağır ve sonuçları al
                 self.users = try await takeAllUsername()
-                // Sonuçları kullan
+                self.users = self.users.filter { $0 != self.username } // Remove currentUser from array. because we dont want to see ourself on table. Because we can't battle with ourself..
                 print(users)
-                // Tabloyu güncelle
+                // Reload Table
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -32,20 +28,21 @@ class NormalModeUserViewController: UITableViewController {
     }
     
     func takeAllUsername() async throws -> [String] {
+        // This part is takes all usernames and pushes the array. Because we need to see online people in our room.
         let db = Firestore.firestore()
         let querySnapshot = try await db.collection("Modes").document("Normal Mode").collection("\(self.gameMode ?? 0) Letters").getDocuments()
         var usernames = [String]()
         for document in querySnapshot.documents {
-            // Belge verisinden "username" alanını al
-            if let username = document.data()["username"] as? String {
-                usernames.append(username)
+            if let username = document.data()["username"] as? String, let isActive = document.data()["isActive"] as? Bool {
+                if isActive {
+                    usernames.append(username)
+                } else {
+                    print("User is offline: \(username)")
+                }
             }
         }
         return usernames
     }
-    
-    //Çözülmesi gereken durum currentUser ın usernameini bir şekilde alıp tableviewden çekmem gerekiyor ki kişi kendine istek atamasın!!!
-
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count

@@ -17,4 +17,5 @@ public struct User: Codable {
 public struct UserForRooms: Codable {
     let email: String
     let username: String
+    let isActive: Bool
 }

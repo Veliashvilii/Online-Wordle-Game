@@ -12,37 +12,37 @@ import FirebaseFirestore
 class NormalModeChooseViewController: UIViewController {
     
     private var gameMode: Int = 0
+    private var username: String = ""
     
     @IBAction func fourLetterRoomTapped(_ sender: Any) {
         self.gameMode = 4
         loginToRoom(roomType: self.gameMode)
-        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
     }
     
     @IBAction func fiveLetterRoomTapped(_ sender: Any) {
         self.gameMode = 5
         loginToRoom(roomType: self.gameMode)
-        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
     }
     
     
     @IBAction func sixLetterRoomTapped(_ sender: Any) {
         self.gameMode = 6
         loginToRoom(roomType: self.gameMode)
-        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
     }
     
     
     @IBAction func sevenLetterButtonTapped(_ sender: Any) {
         self.gameMode = 7
         loginToRoom(roomType: self.gameMode)
-        performSegue(withIdentifier: "toNormalModeUserVC", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toNormalModeUserVC" {
             if let destination = segue.destination as? NormalModeUserViewController {
                 destination.gameMode = self.gameMode
+                if let username = sender as? String {
+                    destination.username = username
+                }
             }
         }
     }
@@ -59,11 +59,12 @@ class NormalModeChooseViewController: UIViewController {
             userRef.getDocument { (document, error) in
                 if let document = document, document.exists {
                     
-                    if let userData = document.data(), let username = userData["username"] as? String {
-                        print("Kullanıcı Adı: \(username)")
-                        let user = UserForRooms(email: email, username: username)
+                    if let userData = document.data(), let username = userData["username"] as? String, let isActive = userData["isActive"] as? Bool {
+                        self.username = username
+                        let user = UserForRooms(email: email, username: username, isActive: isActive)
                         do {
                             try db.collection("Modes").document("Normal Mode").collection("\(roomType) Letters").document(email).setData(from: user)
+                            self.performSegue(withIdentifier: "toNormalModeUserVC", sender: username)
                         } catch let error {
                           print("Error writing user to Firestore (Normal Mode): \(error)")
                         }

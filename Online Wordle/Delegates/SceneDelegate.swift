@@ -55,13 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        // if let email = currentUser?.email {
         //    print("Email: \(email)")
         //}
-        self.setIsActiveUser(email: Auth.auth().currentUser!.email!, isActive: true) { error in
-            if error != nil {
-                print("User is Still Active!")
-            } else {
-                print("User is Passive Now!")
-            }
-        }
+
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
