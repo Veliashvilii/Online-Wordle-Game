@@ -27,6 +27,30 @@ class NormalModeUserViewController: UITableViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        exitRoom()
+    }
+    
+    func exitRoom() {
+        let db = Firestore.firestore()
+        if let email = Auth.auth().currentUser?.email {
+            // When you close the screen you disconnet from the room's databaase.
+            let group = DispatchGroup()
+            group.enter()
+            
+            db.collection("Modes").document("Normal Mode").collection("\(self.gameMode ?? 0) Letters").document(email).delete { error in
+                if let error = error {
+                    print("Error deleting document: \(error)")
+                } else {
+                    print("Document successfully deleted")
+                }
+                group.leave()
+            }
+            group.wait() // Wait all threads for ends.
+        }
+    }
+    
     func takeAllUsername() async throws -> [String] {
         // This part is takes all usernames and pushes the array. Because we need to see online people in our room.
         let db = Firestore.firestore()
