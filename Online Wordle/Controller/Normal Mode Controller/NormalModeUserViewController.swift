@@ -8,20 +8,16 @@ class NormalModeUserViewController: UITableViewController {
     var username: String?
     var users = [String]()
     var database = Database()
+    var listener: ListenerRegistration?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let gameMode = self.gameMode!
         
-        database.getEmailFromUsername(username: self.username!) { result in
-            switch result {
-            case .success(let email):
-                print("E-posta adresi: \(email)")
-            case .failure(let error):
-                print("Hata: \(error.localizedDescription)")
-            }
+        if let currentEmail = Auth.auth().currentUser?.email {
+            self.listenInvitationRequest(currentEmail: currentEmail)
         }
-
+        
         Task {
             do {
                 self.users = try await database.takeAllUsername(gameMode: self.gameMode!)
@@ -36,11 +32,13 @@ class NormalModeUserViewController: UITableViewController {
             }
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.listener?.remove()
         database.exitRoom(gameMode: self.gameMode!)
     }
+
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
@@ -54,19 +52,29 @@ class NormalModeUserViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedUser = users[indexPath.row]
-        showInviteMessage(title: "Game Invite", message: "Do you want to invite \(selectedUser)", selectedUser: selectedUser)
+        self.database.getEmailFromUsername(username: selectedUser) { result in
+            switch result {
+            case .success(let email):
+                self.showInviteMessage(title: "Game Invite", message: "Do you want to invite \(selectedUser)", selectedUser: selectedUser, selectedEmail: email)
+            case.failure(let error):
+                print("Hata: \(error.localizedDescription)")
+            }
+        }
+
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func showInviteMessage(title: String, message: String, selectedUser: String) {
+    func showInviteMessage(title: String, message: String, selectedUser: String, selectedEmail: String) {
         let inviteVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let noButton = UIAlertAction(title: "No", style: .default, handler: nil)
         let yesButton = UIAlertAction(title: "Yes", style: .default) { action in
             // Davet oluşturup Firestore'a kaydetme
-            self.sendInvitationToUser(selectedUser)
+            if let sender = Auth.auth().currentUser?.email {
+                self.database.sendInvitationRequest(sender: sender, receiver: selectedEmail)
+            }
+            
         }
-        
         inviteVc.addAction(noButton)
         inviteVc.addAction(yesButton)
         self.present(inviteVc, animated: true, completion: nil)
@@ -79,115 +87,26 @@ class NormalModeUserViewController: UITableViewController {
         self.present(alertVc, animated: true, completion: nil)
     }
     
-    func sendInvitationToUser(_ selectedUser: String) {
-        guard let currentUserEmail = Auth.auth().currentUser?.email else {
-            return
-        }
-        
-        database.getEmailFromUsername(username: selectedUser) { result in
-            switch result {
-            case .success(let email):
-                let db = Firestore.firestore()
-                let invitationData: [String: Any] = [
-                    "sender": currentUserEmail,
-                    "receiver": email,
-                    "status": "pending", // Davetin durumu (kabul edilmedi, reddedilmedi)
-                    "timestamp": Date() // Zaman damgası ekleyin
-                ]
-                
-                db.collection("Invitations").addDocument(data: invitationData) { error in
-                    if let error = error {
-                        print("Error sending invitation: \(error)")
-                    } else {
-                        print("Invitation sent successfully")
-                        self.startInvitationTimer(for: selectedUser)
-                    }
+    func listenInvitationRequest (currentEmail: String){
+        let listener = Firestore.firestore().collection("Invitations")
+            .whereField("receiver", isEqualTo: currentEmail)
+            .whereField("status", isEqualTo: "pending")
+            .addSnapshotListener { querySnapshot, error in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching invitations: \(String(describing: error))")
+                    return
                 }
-            case .failure(let error):
-                print("Hata: \(error.localizedDescription)")
+                
+                if snapshot.isEmpty {
+                    print("Snapshot is empty, Maybe user enter to room at first time or user don' t have a request!")
+                } else {
+                    self.showAlertMessage(title: "Cong!!", message: "You have a request now.")
+                }
             }
-        }
+        self.listener = listener
     }
     
-    func startInvitationTimer(for selectedUser: String) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { // 10 saniye sonra
-            self.checkInvitationStatus(for: selectedUser)
-        }
-    }
 
-    func checkInvitationStatus(for selectedUser: String) {
-        let db = Firestore.firestore()
-        let currentUserEmail = Auth.auth().currentUser?.email ?? ""
-        
-        self.database.getEmailFromUsername(username: selectedUser) { result in
-            switch result {
-            case .success(let selectedEmail):
-                db.collection("Invitations")
-                    .whereField("sender", isEqualTo: currentUserEmail)
-                    .whereField("receiver", isEqualTo: selectedEmail)
-                    .getDocuments { querySnapshot, error in
-                        if let error = error {
-                            print("Error getting invitation status: \(error)")
-                        } else {
-                            var invitationFound = false
-                            
-                            for document in querySnapshot?.documents ?? [] {
-                                invitationFound = true
-                                
-                                if let status = document.data()["status"] as? String {
-                                    if status == "pending" {
-                                        // Davet hala bekleniyor, reddetme işlemi gerçekleştirilir
-                                        self.rejectInvitation(for: selectedUser)
-                                        self.showAlertMessage(title: "Sorry..", message: "Your invite is not accepted!")
-                                        print("Invitation automatically rejected due to timeout")
-                                    } else {
-                                        // Davet kabul edildi veya reddedildi, bu durumda bir işlem yapmayız
-                                    }
-                                }
-                            }
-                            
-                            // Davet bulunamadıysa, davet gönderilmediği için reddetme işlemi gerçekleştirilir
-                            if !invitationFound {
-                                self.rejectInvitation(for: selectedUser)
-                                self.showAlertMessage(title: "Sorry..", message: "We can't found the user!")
-                                print("Invitation automatically rejected due to timeout")
-                            }
-                        }
-                    }
-            case .failure(let error):
-                print("Hata: \(error.localizedDescription)")
-            }
-        }
-        
-
-    }
-
-    func rejectInvitation(for selectedUser: String) {
-        let db = Firestore.firestore()
-        let currentUserEmail = Auth.auth().currentUser?.email ?? ""
-        
-        self.database.getEmailFromUsername(username: selectedUser) { result in
-            switch result {
-            case .success(let selectedEmail):
-                db.collection("Invitations")
-                    .whereField("sender", isEqualTo: currentUserEmail)
-                    .whereField("receiver", isEqualTo: selectedEmail)
-                    .getDocuments { querySnapshot, error in
-                        if let error = error {
-                            print("Error rejecting invitation: \(error)")
-                        } else {
-                            for document in querySnapshot?.documents ?? [] {
-                                document.reference.updateData(["status": "rejected"])
-                            }
-                        }
-                    }
-            case .failure(let error):
-                print("Hata: \(error.localizedDescription)")
-            }
-        }
-        
-
-    }
     
     // Şu an kullanıcı olarak bir istek yollanıyor backend tarafında ve 10 saniye içinde cevap alınmadığı durumda oyun isteğinin reddedildiği aktif kullanıcıya gösteriliyor. Ancak daveti alan kullanıcı tarafında şu an her hangi bir işlem gerçekleşmiyor. Alıcı gelen ,steği ekranında görem,yor bunun yapılması gerekiyor.
 

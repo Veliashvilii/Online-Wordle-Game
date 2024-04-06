@@ -59,6 +59,45 @@ class Database {
         return usernames
     }
     
+    func sendInvitationRequest(sender: String, receiver: String) {
+        let invitationData: [String: Any] = [
+            "sender": sender,
+            "receiver": receiver,
+            "status": "pending",
+            "timestamp": Date()
+        ]
+        self.database.collection("Invitations").addDocument(data: invitationData) { error in
+            if let error = error {
+                print("Error sending invitation: \(error)")
+            } else {
+                print("Invitation sent successfully")
+            }
+            
+        }
+    }
+    
+    func listenInvitationRequest(receiver: String, completion: @escaping (Bool, Error?) -> Void) {
+        self.database.collection("Invitations")
+            .whereField("receiver", isEqualTo: receiver)
+            .whereField("status", isEqualTo: "pending")
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error fetching invitations: \(error)")
+                    completion(false, error)
+                    return
+                }
+                
+                if let documents = querySnapshot?.documents, !documents.isEmpty {
+                    // Davet isteği var
+                    completion(true, nil)
+                } else {
+                    // Davet isteği yok
+                    completion(false, nil)
+                }
+            }
+    }
+
+    
     func exitRoom(gameMode: Int) {
         if let email = Auth.auth().currentUser?.email {
             // When you close the screen you disconnet from the room's databaase.
