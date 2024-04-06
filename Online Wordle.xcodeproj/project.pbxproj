@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B906CA602BC144E5009350E0 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B906CA5F2BC144E5009350E0 /* Database.swift */; };
 		B930366B2BBAF5B000B03FCC /* NormalModeChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B930366A2BBAF5B000B03FCC /* NormalModeChooseViewController.swift */; };
 		B930366D2BBAFCC200B03FCC /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = B930366C2BBAFCC200B03FCC /* Room.swift */; };
 		B98D28FA2BB4CC9E0071BDF7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B906CA5F2BC144E5009350E0 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		B930366A2BBAF5B000B03FCC /* NormalModeChooseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalModeChooseViewController.swift; sourceTree = "<group>"; };
 		B930366C2BBAFCC200B03FCC /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -61,6 +63,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B906CA5D2BC144BD009350E0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B9F9F9E62BB4C52100CB078E /* Main.storyboard */,
+				B9F9F9EB2BB4C52300CB078E /* LaunchScreen.storyboard */,
+				B9F9F9E92BB4C52300CB078E /* Assets.xcassets */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B906CA5E2BC144CB009350E0 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				B906CA5F2BC144E5009350E0 /* Database.swift */,
+				B9C987A92BB9FE1F002B77D2 /* Models */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		B93036672BBACD5900B03FCC /* Normal Mode Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				B93036672BBACD5900B03FCC /* Normal Mode Controller */,
-				B9C987A92BB9FE1F002B77D2 /* Models */,
 				B9F9F9E42BB4C52100CB078E /* ViewController.swift */,
 				B9947F5F2BB5A51A0061619E /* SettingsViewController.swift */,
 				B9947F5D2BB567720061619E /* SignUpViewController.swift */,
@@ -129,11 +149,10 @@
 		B9F9F9DF2BB4C52100CB078E /* Online Wordle */ = {
 			isa = PBXGroup;
 			children = (
+				B906CA5E2BC144CB009350E0 /* Database */,
+				B906CA5D2BC144BD009350E0 /* Views */,
 				B9C987A82BB9FE03002B77D2 /* Controller */,
 				B9C987A72BB9FDEC002B77D2 /* Delegates */,
-				B9F9F9E62BB4C52100CB078E /* Main.storyboard */,
-				B9F9F9EB2BB4C52300CB078E /* LaunchScreen.storyboard */,
-				B9F9F9E92BB4C52300CB078E /* Assets.xcassets */,
 				B9F9F9EE2BB4C52300CB078E /* Info.plist */,
 				B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */,
 			);
@@ -226,6 +245,7 @@
 				B930366B2BBAF5B000B03FCC /* NormalModeChooseViewController.swift in Sources */,
 				B9E3B73C2BBB45E200B661F4 /* NormalModeUserViewController.swift in Sources */,
 				B930366D2BBAFCC200B03FCC /* Room.swift in Sources */,
+				B906CA602BC144E5009350E0 /* Database.swift in Sources */,
 				B9DC0F8D2BB983FA00D1B8A6 /* User.swift in Sources */,
 				B9947F5E2BB567720061619E /* SignUpViewController.swift in Sources */,
 				B9C987AD2BBA1BE0002B77D2 /* GameModeViewController.swift in Sources */,
