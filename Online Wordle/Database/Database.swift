@@ -76,6 +76,35 @@ class Database {
         }
     }
     
+    func checkActiveInvitationRequest(sender: String, completion: @escaping (Bool) -> Void) {
+        /**
+           This function checks if there is an active invitation request from the specified sender in the Firestore database.
+           It queries the 'Invitations' collection for documents where the sender is equal to the provided sender's email and
+           the status is 'pending'. If any such document is found, it sets 'isActive' to true; otherwise, it remains false.
+           Upon completion, the 'isActive' status is passed to the completion handler.
+        */
+
+        var isActive = false
+        self.database.collection("Invitations")
+            .whereField("sender", isEqualTo: sender)
+            .whereField("status", isEqualTo: "pending")
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error fetching invitations when checking active: \(error)")
+                } else {
+                    for document in querySnapshot?.documents ?? [] {
+                        if let status = document.data()["status"] as? String {
+                            if status == "pending" {
+                                isActive = true
+                                break
+                            }
+                        }
+                    }
+                }
+                completion(isActive)
+            }
+    }
+    
     func listenInvitationRequest(receiver: String, completion: @escaping (Bool, Error?) -> Void) {
         self.database.collection("Invitations")
             .whereField("receiver", isEqualTo: receiver)

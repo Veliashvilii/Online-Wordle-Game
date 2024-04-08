@@ -69,11 +69,16 @@ class NormalModeUserViewController: UITableViewController {
         
         let noButton = UIAlertAction(title: "No", style: .default, handler: nil)
         let yesButton = UIAlertAction(title: "Yes", style: .default) { action in
-            // Davet oluşturup Firestore'a kaydetme
             if let sender = Auth.auth().currentUser?.email {
-                self.database.sendInvitationRequest(sender: sender, receiver: selectedEmail)
+                // isActive is mean have user active request for game.
+                self.database.checkActiveInvitationRequest(sender: sender) { isActive in
+                    if isActive {
+                        self.showAlertMessage(title: "Active Invitation Exists", message: "You cannot send another invitation as there is an active invitation pending for this user. Please wait for the current invitation to be accepted or canceled before sending a new one.")
+                    } else {
+                        self.database.sendInvitationRequest(sender: sender, receiver: selectedEmail)
+                    }
+                }
             }
-            
         }
         inviteVc.addAction(noButton)
         inviteVc.addAction(yesButton)
