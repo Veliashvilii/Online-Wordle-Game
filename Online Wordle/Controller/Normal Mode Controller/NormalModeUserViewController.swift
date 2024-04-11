@@ -85,6 +85,20 @@ class NormalModeUserViewController: UITableViewController {
         self.present(inviteVc, animated: true, completion: nil)
     }
     
+    func showInviteRequest(title: String, message: String, sender: String) {
+        let requestVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let noButton = UIAlertAction(title: "Decline", style: .default) { action in
+            self.database.answerRequest(sender: sender, answer: "reject")
+        }
+        let yesButton = UIAlertAction(title: "Accept", style: .default) { action in
+            self.database.answerRequest(sender: sender, answer: "accept")
+        }
+        requestVc.addAction(noButton)
+        requestVc.addAction(yesButton)
+        self.present(requestVc, animated: true, completion: nil)
+    }
+    
     func showAlertMessage(title: String, message: String) {
         let alertVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
@@ -93,6 +107,8 @@ class NormalModeUserViewController: UITableViewController {
     }
     
     func listenInvitationRequest (currentEmail: String){
+        /**This code snippet is used to monitor a user's invitations on Firebase Firestore. It filters invitations matching the user's email address and having a status of "pending". Upon receiving an invitation, the user is presented with a prompt titled "Game Invitation" and a message stating "You have been invited to join a multiplayer game." This code enhances user experience by promptly handling invitations as they arrive.*/
+        
         let listener = Firestore.firestore().collection("Invitations")
             .whereField("receiver", isEqualTo: currentEmail)
             .whereField("status", isEqualTo: "pending")
@@ -105,16 +121,20 @@ class NormalModeUserViewController: UITableViewController {
                 if snapshot.isEmpty {
                     print("Snapshot is empty, Maybe user enter to room at first time or user don' t have a request!")
                 } else {
-                    self.showAlertMessage(title: "Cong!!", message: "You have a request now.")
+                    for document in snapshot.documents {
+                        let data = document.data()
+                        
+                        if let sender = data["sender"] as? String {
+                            self.showInviteRequest(title: "Game Invitation", message: "You have been invited to join a multiplayer game.", sender: sender)
+                        }
+                    }
                 }
             }
         self.listener = listener
     }
     
-
     
-    // Şu an kullanıcı olarak bir istek yollanıyor backend tarafında ve 10 saniye içinde cevap alınmadığı durumda oyun isteğinin reddedildiği aktif kullanıcıya gösteriliyor. Ancak daveti alan kullanıcı tarafında şu an her hangi bir işlem gerçekleşmiyor. Alıcı gelen ,steği ekranında görem,yor bunun yapılması gerekiyor.
-
-
+    
+    
     
 }

@@ -105,26 +105,30 @@ class Database {
             }
     }
     
-    func listenInvitationRequest(receiver: String, completion: @escaping (Bool, Error?) -> Void) {
+    func answerRequest(sender: String, answer: String) {
+        /**This function allows the user to respond to invitations. It queries the "Invitations" collection in Firebase Firestore with the provided sender and answer parameters, filtering documents with a "pending" status. Then, as it processes each document, it updates the status of the document with the specified response (answer). This update operation is performed by referencing the document and executed individually for each document. If an error occurs, an error message is printed; otherwise, a message indicating successful completion is displayed. This piece of code manages the user's response to invitations and updates documents in Firestore accordingly.*/
+        
         self.database.collection("Invitations")
-            .whereField("receiver", isEqualTo: receiver)
+            .whereField("sender", isEqualTo: sender)
             .whereField("status", isEqualTo: "pending")
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
-                    print("Error fetching invitations: \(error)")
-                    completion(false, error)
-                    return
-                }
-                
-                if let documents = querySnapshot?.documents, !documents.isEmpty {
-                    // Davet isteği var
-                    completion(true, nil)
+                    print("Error answer invitations when checking active: \(error)")
                 } else {
-                    // Davet isteği yok
-                    completion(false, nil)
+                    for document in querySnapshot!.documents {
+                        let documentRef = self.database.collection("Invitations").document(document.documentID)
+                        documentRef.updateData(["status": answer]) { error in
+                            if let error = error {
+                                print("Error updating document: \(error)")
+                            } else {
+                                print("Document successfully updated")
+                            }
+                        }
+                    }
                 }
             }
     }
+
 
     
     func exitRoom(gameMode: Int) {
