@@ -7,8 +7,12 @@ class NormalModeUserViewController: UITableViewController {
     var gameMode: Int?
     var username: String?
     var users = [String]()
+    
     var database = Database()
+    
     var listener: ListenerRegistration?
+    
+    var autoRejectTimer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +39,14 @@ class NormalModeUserViewController: UITableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.listener?.remove()
+        //self.listener?.remove()
         database.exitRoom(gameMode: self.gameMode!)
+    }
+    
+    deinit {
+        // Invalidate the timer and remove the listener when the view controller is deallocated
+        invalidateAutoRejectTimer()
+        listener?.remove()
     }
 
     
@@ -63,6 +73,21 @@ class NormalModeUserViewController: UITableViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
+    func startAutoRejectTimer(sender: String) {
+        autoRejectTimer?.invalidate()
+        autoRejectTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { timer in
+            self.database.answerRequest(sender: sender, answer: "reject")
+        }
+    }
+    
+    func invalidateAutoRejectTimer() {
+        autoRejectTimer?.invalidate()
+    }
+    
+    
+    
     
     func showInviteMessage(title: String, message: String, selectedUser: String, selectedEmail: String) {
         let inviteVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -126,11 +151,16 @@ class NormalModeUserViewController: UITableViewController {
                         
                         if let sender = data["sender"] as? String {
                             self.showInviteRequest(title: "Game Invitation", message: "You have been invited to join a multiplayer game.", sender: sender)
+                            self.startAutoRejectTimer(sender:sender)
                         }
                     }
                 }
             }
         self.listener = listener
+    }
+    
+    func listenInvitationAnswers (currentEmail: String) {
+        
     }
     
     
