@@ -133,7 +133,9 @@ class NormalModeUserViewController: UITableViewController {
     }
     
     func listenInvitationRequest (currentEmail: String){
-        /**This code snippet is used to monitor a user's invitations on Firebase Firestore. It filters invitations matching the user's email address and having a status of "pending". Upon receiving an invitation, the user is presented with a prompt titled "Game Invitation" and a message stating "You have been invited to join a multiplayer game." This code enhances user experience by promptly handling invitations as they arrive.*/
+        /**
+         This code snippet is used to monitor a user's invitations on Firebase Firestore. It filters invitations matching the user's email address and having a status of "pending". Upon receiving an invitation, the user is presented with a prompt titled "Game Invitation" and a message stating "You have been invited to join a multiplayer game." This code enhances user experience by promptly handling invitations as they arrive.
+         */
         
         let listener = Firestore.firestore().collection("Invitations")
             .whereField("receiver", isEqualTo: currentEmail)
@@ -161,7 +163,10 @@ class NormalModeUserViewController: UITableViewController {
     }
     
     func listenInvitationAnswers(currentEmail: String) {
-        let listener = Firestore.firestore().collection("Invitations")
+        /**
+         This code listens for responses to game invitations in a Firebase Firestore collection named "Invitations" for a specific user identified by their email address. It looks for invitations sent by the user and filters them based on whether they have been accepted or rejected. Using a Snapshot Listener, it detects any changes and checks the status of the invitations. Depending on the status, it displays an appropriate alert message.
+         */
+        _ = Firestore.firestore().collection("Invitations")
             .whereField("sender", isEqualTo: currentEmail)
             .whereField("status", in: ["accept", "reject"]) // Sadece accept veya reject durumu olan davetler
             .addSnapshotListener { querySnapshot, error in
@@ -188,8 +193,6 @@ class NormalModeUserViewController: UITableViewController {
                         }
                     }
                 }
-                
-
             }
     }
 

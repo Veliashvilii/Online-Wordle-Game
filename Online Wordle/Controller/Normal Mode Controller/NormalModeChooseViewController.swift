@@ -52,7 +52,9 @@ class NormalModeChooseViewController: UIViewController {
     }
     
     func loginToRoom(roomType: Int) {
-        // Facilitates the login process for users into a specific room type within a Firestore database. It first checks for the currently authenticated user and retrieves their username from the database. Then, it writes the user's email and username to the Firestore database under a specific location based on the room type provided. The function includes error handling to manage scenarios such as document not found or errors during data writing...
+        /**
+         Facilitates the login process for users into a specific room type within a Firestore database. It first checks for the currently authenticated user and retrieves their username from the database. Then, it writes the user's email and username to the Firestore database under a specific location based on the room type provided. The function includes error handling to manage scenarios such as document not found or errors during data writing...
+         */
         let db = Firestore.firestore()
         if let email = Auth.auth().currentUser?.email {
             let userRef = db.collection("users").document(email)
