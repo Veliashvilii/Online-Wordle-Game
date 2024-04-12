@@ -20,6 +20,7 @@ class NormalModeUserViewController: UITableViewController {
         
         if let currentEmail = Auth.auth().currentUser?.email {
             self.listenInvitationRequest(currentEmail: currentEmail)
+            self.listenInvitationAnswers(currentEmail: currentEmail)
         }
         
         Task {
@@ -159,9 +160,39 @@ class NormalModeUserViewController: UITableViewController {
         self.listener = listener
     }
     
-    func listenInvitationAnswers (currentEmail: String) {
-        
+    func listenInvitationAnswers(currentEmail: String) {
+        let listener = Firestore.firestore().collection("Invitations")
+            .whereField("sender", isEqualTo: currentEmail)
+            .whereField("status", in: ["accept", "reject"]) // Sadece accept veya reject durumu olan davetler
+            .addSnapshotListener { querySnapshot, error in
+                guard let snapshot = querySnapshot else {
+                    print("Error fetching invitation answers: \(String(describing: error))")
+                    return
+                }
+                
+                if snapshot.isEmpty {
+                    print("Upps! You don't have a active request for game")
+                } else {
+                    for documentChange in snapshot.documentChanges {
+                        guard let status = documentChange.document.data()["status"] as? String else {
+                            continue
+                        }
+                        
+                        switch status {
+                        case "accept":
+                            self.showAlertMessage(title: "You will pass", message: "Welcome!")
+                        case "reject":
+                            self.showAlertMessage(title: "Upps..", message: "Try Again!")
+                        default:
+                            break
+                        }
+                    }
+                }
+                
+
+            }
     }
+
     
     
     
