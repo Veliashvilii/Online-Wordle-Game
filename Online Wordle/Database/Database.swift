@@ -106,6 +106,9 @@ class Database {
     }
     
     func answerRequest(sender: String, answer: String, completion: @escaping () -> Void) {
+        /**
+         This function allows the user to respond to invitations. It queries the "Invitations" collection in Firebase Firestore with the provided sender and answer parameters, filtering documents with a "pending" status. Then, as it processes each document, it updates the status of the document with the specified response (answer). This update operation is performed by referencing the document and executed individually for each document. If an error occurs, an error message is printed; otherwise, a message indicating successful completion is displayed. This piece of code manages the user's response to invitations and updates documents in Firestore accordingly.
+         */
         self.database.collection("Invitations")
             .whereField("sender", isEqualTo: sender)
             .whereField("status", isEqualTo: "pending")
