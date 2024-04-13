@@ -79,7 +79,9 @@ class NormalModeUserViewController: UITableViewController {
     func startAutoRejectTimer(sender: String) {
         autoRejectTimer?.invalidate()
         autoRejectTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { timer in
-            self.database.answerRequest(sender: sender, answer: "reject")
+            self.database.answerRequest(sender: sender, answer: "reject") {
+                print("Timerda reddediliyor..")
+            }
         }
     }
     
@@ -115,10 +117,17 @@ class NormalModeUserViewController: UITableViewController {
         let requestVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let noButton = UIAlertAction(title: "Decline", style: .default) { action in
-            self.database.answerRequest(sender: sender, answer: "reject")
+            self.database.answerRequest(sender: sender, answer: "reject") {
+                print("Reddediliyor...")
+            }
         }
         let yesButton = UIAlertAction(title: "Accept", style: .default) { action in
-            self.database.answerRequest(sender: sender, answer: "accept")
+            self.database.answerRequest(sender: sender, answer: "accept") {
+                // Firestore işlemleri tamamlandığında segue'yi tetikle
+                print("Kabul Ediliyor..")
+                self.performSegue(withIdentifier: "toExampleVC", sender: self)
+                print("Kabul İşlemi tamamlandı..")
+            }
         }
         requestVc.addAction(noButton)
         requestVc.addAction(yesButton)
@@ -128,6 +137,15 @@ class NormalModeUserViewController: UITableViewController {
     func showAlertMessage(title: String, message: String) {
         let alertVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertVc.addAction(okButton)
+        self.present(alertVc, animated: true, completion: nil)
+    }
+    
+    func showStartMessage(title: String, message: String) {
+        let alertVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default) { action in
+                self.performSegue(withIdentifier: "toExampleVC", sender: self)
+        }
         alertVc.addAction(okButton)
         self.present(alertVc, animated: true, completion: nil)
     }
@@ -185,7 +203,7 @@ class NormalModeUserViewController: UITableViewController {
                         
                         switch status {
                         case "accept":
-                            self.showAlertMessage(title: "You will pass", message: "Welcome!")
+                            self.showStartMessage(title: "Accepted!", message: "Your game will start!")
                         case "reject":
                             self.showAlertMessage(title: "Upps..", message: "Try Again!")
                         default:
