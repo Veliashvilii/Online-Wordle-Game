@@ -125,7 +125,7 @@ class NormalModeUserViewController: UITableViewController {
             self.database.answerRequest(sender: sender, answer: "accept") {
                 // Firestore işlemleri tamamlandığında segue'yi tetikle
                 print("Kabul Ediliyor..")
-                self.performSegue(withIdentifier: "toExampleVC", sender: self)
+                self.performSegue(withIdentifier: "toNormalChooseVC", sender: self)
                 print("Kabul İşlemi tamamlandı..")
             }
         }
@@ -144,7 +144,7 @@ class NormalModeUserViewController: UITableViewController {
     func showStartMessage(title: String, message: String) {
         let alertVc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .default) { action in
-                self.performSegue(withIdentifier: "toExampleVC", sender: self)
+                self.performSegue(withIdentifier: "toNormalChooseVC", sender: self)
         }
         alertVc.addAction(okButton)
         self.present(alertVc, animated: true, completion: nil)
@@ -216,7 +216,14 @@ class NormalModeUserViewController: UITableViewController {
 
     
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNormalChooseVC" {
+            if let destination = segue.destination as? NormalChooseViewController {
+                destination.username = self.username
+                destination.gameMode = self.gameMode
+            }
+        }
+    }
     
     
 }
