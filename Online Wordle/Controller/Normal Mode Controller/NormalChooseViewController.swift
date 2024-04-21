@@ -12,9 +12,19 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var wordInput: UITextField!
     
     var timer: Timer?
+    
+    var database = Database()
+    let group = DispatchGroup()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        
+        self.group.enter()
+        self.database.inGame()
+        self.group.leave()
+        
 
         if let username = username {
             usernameLabel.text = username
@@ -61,6 +71,7 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
             if isWordInFile(word: word, fileName: "words.txt") {
                 print("Kelime dosyada bulundu.")
                 timer?.invalidate()
+                timeLabel.text = "Please wait"
                 // Kelime dosyada bulunuyorsa burada yapılacak işlemleri ekle
             } else {
                 print("Kelime dosyada bulunamadı.")
