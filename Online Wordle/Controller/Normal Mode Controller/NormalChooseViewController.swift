@@ -41,6 +41,8 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tapGesture)
         
         startTimer()
+        
+        //self.database.debug()
     }
 
     // UITextFieldDelegate metodları
@@ -106,7 +108,7 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimeLabel), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(updateTimeLabel), userInfo: nil, repeats: true)
     }
 
     @objc func updateTimeLabel() {
@@ -114,9 +116,16 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
             remainingTime -= 1
             timeLabel.text = "\(remainingTime) saniye"
         } else {
-            timer?.invalidate() // Timer'ı durdur
+            timer?.invalidate()
             timeLabel.text = "Süre doldu"
             self.showAlertMessage(title: "Time's Up", message: "The time has expired. Please proceed to the next steps.")
+            self.database.checkWord(user: self.email!) { isFoundWord in
+                if isFoundWord {
+                    self.showAlertMessage(title: "Defeat", message: "You lost the game!")
+                } else {
+                    self.startTimer()
+                }
+            }
         }
     }
     
