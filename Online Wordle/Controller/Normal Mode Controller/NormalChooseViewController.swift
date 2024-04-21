@@ -1,8 +1,11 @@
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class NormalChooseViewController: UIViewController, UITextFieldDelegate {
 
     var username: String?
+    var email: String?
     var gameMode: Int?
     
     var remainingTime: Int = 60
@@ -19,7 +22,7 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        self.email = Auth.auth().currentUser?.email
         
         self.group.enter()
         self.database.inGame()
@@ -72,6 +75,9 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
                 print("Kelime dosyada bulundu.")
                 timer?.invalidate()
                 timeLabel.text = "Please wait"
+                self.group.enter()
+                self.database.pushWord(user: self.email!, word: word)
+                self.group.leave()
                 // Kelime dosyada bulunuyorsa burada yapılacak işlemleri ekle
             } else {
                 print("Kelime dosyada bulunamadı.")

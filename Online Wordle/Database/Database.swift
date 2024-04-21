@@ -200,6 +200,72 @@ class Database {
             }
         }
     }
+    
+    func getBattleInfos(completion: @escaping (String?, String?) -> Void) {
+        /**
+         The "getBattleInfos" function aims to retrieve documents from a collection in Firebase based on specific conditions. The function first checks the user's authentication status, and if the user is authenticated, it retrieves the current user's email address. It then queries documents that contain this email address either as the sender or the receiver. It first attempts to fetch documents where the email address is listed as the sender, and if none are found, it retrieves documents where the email address is listed as the receiver. In both cases, it processes the data of the retrieved documents and calls a completion block when the relevant operation is completed. If no documents are found or an error occurs, it calls the completion block with nil values and prints appropriate error messages. This function can be used to fetch information related to invitations for a specific user.
+         */
+        if let email = Auth.auth().currentUser?.email {
+            self.database.collection("Invitations")
+                .whereField("sender", isEqualTo: email)
+                .getDocuments { (snapshot, error) in
+                    if let error = error {
+                        print("Error getting documents: \(error)")
+                        completion(nil, nil)
+                    } else {
+                        if snapshot!.isEmpty {
+                            // Gönderen olarak belirtilmiş belge yok, o zaman alıcı olarak kontrol et
+                            self.database.collection("Invitations")
+                                .whereField("receiver", isEqualTo: email)
+                                .getDocuments { (receiverSnapshot, receiverError) in
+                                    if let receiverError = receiverError {
+                                        print("Error getting documents: \(receiverError)")
+                                        completion(nil, nil)
+                                    } else {
+                                        for document in receiverSnapshot!.documents {
+                                            let data = document.data()
+                                            if let sender = data["sender"] as? String {
+                                                completion(sender, document.documentID)
+                                                return
+                                            }
+                                        }
+                                        completion(nil, nil) // Alıcı olarak belirtilmiş belge yok
+                                    }
+                                }
+                        } else {
+                            for document in snapshot!.documents {
+                                let data = document.data()
+                                if let receiver = data["receiver"] as? String {
+                                    completion(receiver, document.documentID)
+                                    return
+                                }
+                            }
+                            completion(nil, nil) // Gönderen olarak belirtilmiş belge yok
+                        }
+                    }
+                }
+        } else {
+            completion(nil, nil) // Kullanıcı oturumu yok
+        }
+    }
+
+
+    
+    func pushWord(user: String, word: String) {
+        /**
+         The "pushWord" function is designed to add a word to a subcollection named "Words" within a specific document in the "Invitations" collection in Firebase. First, it calls the getBattleInfos function to obtain information about the battle, including the rival's user ID and the ID of the document containing the battle details. If this information is successfully retrieved, it constructs a dictionary containing the user's ID, the rival's ID, and the word to be pushed. Subsequently, it accesses the Firebase database, navigates to the specified document within the "Invitations" collection, and then to the "Words" subcollection, where it adds a new document containing the word data. This function facilitates the process of submitting words during a battle or game between users.
+         */
+        self.getBattleInfos { rival, documentID in
+            if let rival = rival, let documentID = documentID {
+                let wordData: [String: Any] = [
+                    "user": user,
+                    "rival": rival,
+                    "word": word,
+                ]
+                self.database.collection("Invitations").document(documentID).collection("Words").addDocument(data: ["words": wordData])
+            }
+        }
+    }
 
     
 
