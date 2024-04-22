@@ -75,11 +75,14 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
         if let word = wordInput.text, !word.isEmpty {
             if isWordInFile(word: word, fileName: "words.txt") {
                 print("Kelime dosyada bulundu.")
-                timer?.invalidate()
+                //timer?.invalidate()
                 timeLabel.text = "Please wait"
                 self.group.enter()
-                self.database.pushWord(user: self.email!, word: word)
-                self.group.leave()
+                self.showAlertMessage(title: "Word Submission Successful.", message: "Please wait for your rival..") {
+                    self.database.pushWord(user: self.email!, word: word)
+                    self.group.leave()
+                }
+                //self.database.pushWord(user: self.email!, word: word)
                 // Kelime dosyada bulunuyorsa burada yapılacak işlemleri ekle
             } else {
                 print("Kelime dosyada bulunamadı.")
@@ -112,8 +115,9 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func updateTimeLabel() {
-        /**updateTimeLabel() function is responsible for updating a countdown timer label called timeLabel, which is periodically called by a timer.
-         /
+        /**
+         updateTimeLabel() function is responsible for updating a countdown timer label called timeLabel, which is periodically called by a timer.
+         
          This function checks the value of a variable named remainingTime. If the value of remainingTime is greater than zero, the countdown continues, and it updates the remaining time on the timeLabel. If the remainingTime is equal to or less than zero, it indicates that the time has expired, and it displays the text "Time's Up" on the timeLabel. Then, it invalidates the timer, preventing further calls to this function.
 
          When the time runs out, the checkWord function is called. This function checks a specific word submitted by a user in the database. If the word submitted by the user is found, it displays a warning message with the title "Defeat", indicating that the user has lost the game. If the word is not found, it displays a warning message with the title "Time's Up", indicating that the time has expired, and it restarts the timer.
@@ -131,13 +135,24 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
                 self.group.leave()
                 
                 if isFoundWord {
-                    self.showAlertMessage(title: "Defeat", message: "You lost the game!") {
-                        print("Segue yapıp kayıp ekranına yönelmeli!")
+                    // Şimdi burada yeni method çalışmalı. Eğer ben de kelime girdiysem oyun alanına segue atıcaz. Eğer sadece rakip girdiyse kayıp ekranına segue atıcaz.
+                    self.database.checkWordMine(user: self.email!) { isFoundWordMine in
+                        if isFoundWordMine {
+                            print("Abi Oyunu Başlatmak İçin Segue Atarım Şimdi!")
+                        } else {
+                            print("Segue yapıp kayıp ekranına yönelmeli!")
+                        }
                     }
                 } else {
-                    self.showAlertMessage(title: "Time's Up", message: "The time has expired. Please proceed to the next steps.") {
-                        self.remainingTime = 60
-                        self.startTimer() // Zamanlayıcıyı yeniden başlat
+                    self.database.checkWordMine(user: self.email!) { isFoundWordMine in
+                        if isFoundWordMine {
+                            print("Abi Sen Oyunu Kazandın Galip Ekranına Segue Atarım!")
+                        } else {
+                            self.showAlertMessage(title: "Time's Up", message: "The time has expired. Please proceed to the next steps.") {
+                                self.remainingTime = 60
+                                self.startTimer() // Zamanlayıcıyı yeniden başlat
+                            }
+                        }
                     }
                 }
             }
