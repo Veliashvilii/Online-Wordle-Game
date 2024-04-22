@@ -112,28 +112,46 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func updateTimeLabel() {
+        /**updateTimeLabel() function is responsible for updating a countdown timer label called timeLabel, which is periodically called by a timer.
+         /
+         This function checks the value of a variable named remainingTime. If the value of remainingTime is greater than zero, the countdown continues, and it updates the remaining time on the timeLabel. If the remainingTime is equal to or less than zero, it indicates that the time has expired, and it displays the text "Time's Up" on the timeLabel. Then, it invalidates the timer, preventing further calls to this function.
+
+         When the time runs out, the checkWord function is called. This function checks a specific word submitted by a user in the database. If the word submitted by the user is found, it displays a warning message with the title "Defeat", indicating that the user has lost the game. If the word is not found, it displays a warning message with the title "Time's Up", indicating that the time has expired, and it restarts the timer.
+
+         This function displays the remaining time for the user during the game process and directs the user's actions when the time expires.
+         */
         if remainingTime > 0 {
             remainingTime -= 1
             timeLabel.text = "\(remainingTime) saniye"
         } else {
-            timer?.invalidate()
             timeLabel.text = "Süre doldu"
-            self.showAlertMessage(title: "Time's Up", message: "The time has expired. Please proceed to the next steps.")
+            timer?.invalidate()
+            self.group.enter()
             self.database.checkWord(user: self.email!) { isFoundWord in
+                self.group.leave()
+                
                 if isFoundWord {
-                    self.showAlertMessage(title: "Defeat", message: "You lost the game!")
+                    self.showAlertMessage(title: "Defeat", message: "You lost the game!") {
+                        print("Segue yapıp kayıp ekranına yönelmeli!")
+                    }
                 } else {
-                    self.startTimer()
+                    self.showAlertMessage(title: "Time's Up", message: "The time has expired. Please proceed to the next steps.") {
+                        self.remainingTime = 60
+                        self.startTimer() // Zamanlayıcıyı yeniden başlat
+                    }
                 }
             }
         }
     }
+
     
-    func showAlertMessage (title: String, message: String) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertVC.addAction(okButton)
-        present(alertVC, animated: true)
+    func showAlertMessage(title: String, message: String, completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completion()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     
