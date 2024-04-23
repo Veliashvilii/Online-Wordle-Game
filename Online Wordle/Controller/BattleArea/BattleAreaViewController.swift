@@ -25,6 +25,8 @@ class BattleAreaViewController: UIViewController {
         view = UIView()
         view.backgroundColor = UIColor(red: 236/255, green: 245/255, blue: 216/255, alpha: 1.0)
         
+        addCloseButton()
+        
         usernameLabel = UILabel()
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         usernameLabel.text = self.username
@@ -215,7 +217,6 @@ class BattleAreaViewController: UIViewController {
             print("Cevap Değeri Bulunamadı!")
         }
         
-        // Tahmin doğru değilse ve tahmin hakkı dolmadıysa, numberOfSubmits değerini artır
 
         
         if numberOfSubmits == self.gameMode! {
@@ -242,7 +243,31 @@ class BattleAreaViewController: UIViewController {
         }
     }
 
+    func addCloseButton() {
+         let closeButton = UIButton(type: .custom)
+         closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+         closeButton.tintColor = .black // veya uygun bir renk
+         closeButton.addTarget(self, action: #selector(crossButtonTapped), for: .touchUpInside)
+         
+         view.addSubview(closeButton)
+         closeButton.translatesAutoresizingMaskIntoConstraints = false
+         
+         NSLayoutConstraint.activate([
+             closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+             closeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+             closeButton.widthAnchor.constraint(equalToConstant: 40),
+             closeButton.heightAnchor.constraint(equalToConstant: 40)
+         ])
+     }
     
+    @objc func crossButtonTapped () {
+        let ac = UIAlertController(title: "Warning!", message: "Exiting the game will result in losing your progress. If you wish to exit, please press the confirm button.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            self.performSegue(withIdentifier: "toResultVC", sender: nil)
+        }))
+        present(ac, animated: true, completion: nil)
+    }
     
     func showError(){
         let alertVC = UIAlertController(title: "Error", message: "Invalid Input", preferredStyle: .alert)
