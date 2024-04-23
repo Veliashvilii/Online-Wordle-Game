@@ -31,6 +31,12 @@ class BattleAreaViewController: UIViewController {
         
         addCloseButton()
         
+        timeLabel = UILabel()
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.text = ""
+        timeLabel.font = UIFont.systemFont(ofSize: 18)
+        view.addSubview(timeLabel)
+        
         usernameLabel = UILabel()
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         usernameLabel.text = self.username
@@ -67,7 +73,18 @@ class BattleAreaViewController: UIViewController {
         clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         view.addSubview(clear)
         
+        let rivalButton = UIButton(type: .system)
+        rivalButton.translatesAutoresizingMaskIntoConstraints = false
+        rivalButton.setTitle("RIVAL", for: .normal)
+        rivalButton.addTarget(self, action: #selector(rivalTapped), for: .touchUpInside)
+        view.addSubview(rivalButton)
+        
+        
         NSLayoutConstraint.activate([
+            
+            timeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            timeLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
             usernameLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 25),
             usernameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
@@ -95,7 +112,10 @@ class BattleAreaViewController: UIViewController {
             clear.topAnchor.constraint(equalTo: submit.topAnchor),
             clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
             clear.heightAnchor.constraint(equalTo: submit.heightAnchor),
-            clear.bottomAnchor.constraint(equalTo: submit.bottomAnchor)
+            clear.bottomAnchor.constraint(equalTo: submit.bottomAnchor),
+            
+            rivalButton.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: -50),
+            rivalButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
 
@@ -166,7 +186,7 @@ class BattleAreaViewController: UIViewController {
             timer?.invalidate()
             self.showMessage(title: "Warning!", message: "İf you don't enter a word within 10 seconds, you will lose the game.") {
                 // 10 saniyelik sayaç başlatılacaktır.
-                self.timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(self.updateShortTime), userInfo: nil, repeats: true)
+                self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateShortTime), userInfo: nil, repeats: true)
             }
         }
     }
@@ -174,6 +194,7 @@ class BattleAreaViewController: UIViewController {
     @objc func updateShortTime() {
         if shortRemainingTime > 0 {
             shortRemainingTime -= 1
+            self.timeLabel.text = "\(shortRemainingTime)"
         } else {
             timer?.invalidate()
             self.showMessage(title: "Upps..!", message: "Game Over..") {
@@ -196,6 +217,7 @@ class BattleAreaViewController: UIViewController {
     @objc func submitTapped(_ sender: UIButton){
         remainingTime = 60
         shortRemainingTime = 10
+        timer?.invalidate()
         startTimer()
 
         guard let guess = currentAnswer?.text else {return}
@@ -303,6 +325,12 @@ class BattleAreaViewController: UIViewController {
         present(ac, animated: true, completion: nil)
     }
     
+    @objc func rivalTapped () {
+        self.performSegue(withIdentifier: "toRivalScreenVc", sender: nil)
+    }
+    
+    
+    
     func showError(){
         let alertVC = UIAlertController(title: "Error", message: "Invalid Input", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel))
@@ -316,6 +344,17 @@ class BattleAreaViewController: UIViewController {
             completion()
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toRivalScreenVc" {
+            if let destination = segue.destination as? RivalViewController {
+                destination.username = self.username!
+                destination.email = self.email!
+                destination.gridLength = self.gameMode!
+            }
+        }
     }
     
 

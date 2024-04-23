@@ -9,9 +9,9 @@ import UIKit
 
 class GameModeViewController: UIViewController {
     
-    
+    var gameModes = [4, 5, 6, 7]
     @IBAction func randomLetterButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "toRandomLetterModeVC", sender: nil)
+        performSegue(withIdentifier: "toRandomControllerVC", sender: nil)
     }
     @IBAction func normalLetterButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "toNormalModeChooseVC", sender: nil)
@@ -20,5 +20,15 @@ class GameModeViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toRandomControllerVC" {
+            if let destination = segue.destination as? NormalModeUserViewController {
+                self.gameModes.shuffle()
+                destination.gameMode = gameModes[0]
+            }
+        }
+            
     }
 }

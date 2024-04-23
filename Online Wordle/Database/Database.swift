@@ -366,7 +366,7 @@ class Database {
     func pushGuess(user: String, answer: String, wordCounter: Int) {
         let wordCounterString = String(wordCounter)
         let wordData: [String: Any] = [
-            wordCounterString: answer,
+            "answer": answer,
         ]
         self.getBattleInfos { rival, documentID in
             if let rival = rival, let documentID = documentID {
@@ -376,26 +376,67 @@ class Database {
                     .whereField("rival", isEqualTo: user)
                     .whereField("user", isEqualTo: rival)
                     
-                    docRef.getDocuments { (querySnapshot, error) in
-                        if let error = error {
-                            print("Error getting documents: \(error)")
-                            return
-                        } else {
-                            for document in querySnapshot!.documents {
-                                let newDocumentID = document.documentID
-                                self.database
-                                    .collection("Invitations")
-                                    .document(documentID)
-                                    .collection("Words")
-                                    .document(newDocumentID)
-                                    .collection("Guess")
-                                    .addDocument(data: wordData)
-                            }
+                docRef.getDocuments { (querySnapshot, error) in
+                    if let error = error {
+                        print("Error getting documents: \(error)")
+                        return
+                    } else {
+                        for document in querySnapshot!.documents {
+                            let newDocumentID = document.documentID
+                            // Tahminin ekleneceği döküman adını wordCounter ile belirle
+                            let guessDocRef = self.database
+                                .collection("Invitations")
+                                .document(documentID)
+                                .collection("Words")
+                                .document(newDocumentID)
+                                .collection("Guess")
+                                .document(wordCounterString)
+                            guessDocRef.setData(wordData)
                         }
                     }
+                }
             }
         }
     }
+
+    
+    func getGuesses(user: String, completion: @escaping ([String]?, Error?) -> Void) {
+        self.getBattleInfos { rival, documentID in
+            if let rival = rival, let documentID = documentID {
+                let docRef = self.database.collection("Invitations")
+                    .document(documentID)
+                    .collection("Words")
+                    .whereField("rival", isEqualTo: rival)
+                    .whereField("user", isEqualTo: user)
+                    
+                docRef.getDocuments { (querySnapshot, error) in
+                    if let error = error {
+                        print("Error getting documents: \(error)")
+                        completion(nil, error)
+                    } else {
+                        var guesses: [String] = []
+                        for document in querySnapshot!.documents {
+                            let guessDocRef = document.reference.collection("Guess")
+                            guessDocRef.getDocuments { (guessQuerySnapshot, guessError) in
+                                if let guessError = guessError {
+                                    print("Error getting guess documents: \(guessError)")
+                                    completion(nil, guessError)
+                                } else {
+                                    for guessDocument in guessQuerySnapshot!.documents {
+                                        if let guessData = guessDocument.data()["answer"] as? String {
+                                            guesses.append(guessData)
+                                        }
+                                    }
+                                    completion(guesses, nil)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
 
 

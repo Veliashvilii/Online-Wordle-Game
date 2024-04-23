@@ -201,7 +201,7 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="randomLetterButtonTapped:" destination="Dsp-Md-H5F" eventType="touchUpInside" id="TRz-pc-iGk"/>
-                                    <segue destination="yzL-6c-o55" kind="presentation" identifier="toRandomLetterModeVC" modalPresentationStyle="fullScreen" id="OkO-Mv-mk3"/>
+                                    <segue destination="umO-fF-KOx" kind="presentation" identifier="toRandomControllerVC" modalPresentationStyle="fullScreen" id="uDc-Ia-QdH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0H-av-aKA">
@@ -254,10 +254,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="fll-cG-jYb"/>
+                    <connections>
+                        <segue destination="gQ6-0u-aUk" kind="show" id="8hI-qf-Q34"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQz-OQ-RMa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4308" y="-1227"/>
+            <point key="canvasLocation" x="4308" y="-1259"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="DeJ-Gr-kNI">
@@ -591,6 +594,31 @@
             </objects>
             <point key="canvasLocation" x="5285.6000000000004" y="-376.46176911544228"/>
         </scene>
+        <!--Rival View Controller-->
+        <scene sceneID="VFR-k3-Sba">
+            <objects>
+                <viewController id="ayu-p6-1xR" customClass="RivalViewController" customModule="Online_Wordle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tsg-yF-2ee">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rival" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J1o-PN-y1e">
+                                <rect key="frame" x="156" y="305" width="62" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="YBY-lm-1T8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SCd-Ov-2ue"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ux-ap-ZoA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6302" y="481"/>
+        </scene>
         <!--Battle Area View Controller-->
         <scene sceneID="Ycq-0L-tgQ">
             <objects>
@@ -604,6 +632,7 @@
                     <navigationItem key="navigationItem" id="2N4-Ja-hJR"/>
                     <connections>
                         <segue destination="l1A-Ck-XX7" kind="presentation" identifier="toResultVC" modalPresentationStyle="fullScreen" id="2Qc-9P-9WB"/>
+                        <segue destination="ayu-p6-1xR" kind="show" identifier="toRivalScreenVc" id="fCq-Tt-wxc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Czl-tl-LAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -636,6 +665,10 @@
             <point key="canvasLocation" x="7415" y="-376"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="8hI-qf-Q34"/>
+        <segue reference="uDc-Ia-QdH"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="elips-2" width="100" height="100"/>
         <image name="envelope.circle.fill" catalog="system" width="128" height="123"/>
