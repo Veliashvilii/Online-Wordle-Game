@@ -15,6 +15,8 @@ class BattleAreaViewController: UIViewController {
     
     var database = Database()
     
+    var isFound: Bool?
+    
     var usernameLabel: UILabel!
     var timeLabel: UILabel!
     var textLabel: UILabel!
@@ -22,7 +24,6 @@ class BattleAreaViewController: UIViewController {
     var currentAnswer: UITextField!
     var keyboard = [UIButton]()
     var recentlyPressed = [UIButton]()
-    var winstreak = 0
     var numberOfSubmits = 0
     
     override func loadView() {
@@ -198,6 +199,7 @@ class BattleAreaViewController: UIViewController {
         } else {
             timer?.invalidate()
             self.showMessage(title: "Upps..!", message: "Game Over..") {
+                self.isFound = false
                 self.performSegue(withIdentifier: "toResultVC", sender: nil)
             }
         }
@@ -265,6 +267,7 @@ class BattleAreaViewController: UIViewController {
                 //Eğer kullanıcı doğru bilirse yapılacak işlemler
                 print("Oyun Sonuç Ekranına Gidilmeli")
                 showMessage(title: "Cong!", message: "You found the answer") {
+                    self.isFound = true
                     self.performSegue(withIdentifier: "toResultVC", sender: nil)
                 }
                 return
@@ -353,6 +356,10 @@ class BattleAreaViewController: UIViewController {
                 destination.username = self.username!
                 destination.email = self.email!
                 destination.gridLength = self.gameMode!
+            }
+        } else if segue.identifier == "toResultVC" {
+            if let destination = segue.destination as? ResultViewController {
+                destination.isFound = self.isFound!
             }
         }
     }

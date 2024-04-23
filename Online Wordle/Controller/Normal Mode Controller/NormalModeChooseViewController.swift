@@ -14,6 +14,7 @@ class NormalModeChooseViewController: UIViewController {
     private var gameMode: Int = 0
     private var username: String = ""
     
+    
     @IBAction func fourLetterRoomTapped(_ sender: Any) {
         self.gameMode = 4
         loginToRoom(roomType: self.gameMode)

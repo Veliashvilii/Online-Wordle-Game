@@ -436,6 +436,42 @@ class Database {
             }
         }
     }
+    
+    func finishedGame() {
+        /**
+         This code snippet contains a function that updates the status of game invitations in a Firestore database based on the email address of the currently logged-in user. It checks invitations sent by or received by the user and updates their status to "in-game". Error handling is included to print error messages to the console if any occur. This organized and comprehensible code is used to accurately update the status of game invitations.
+         */
+        if let email = Auth.auth().currentUser?.email {
+            self.database.collection("Invitations")
+                .whereField("sender", isEqualTo: email)
+                .getDocuments { (snapshot, error) in
+                    if let error = error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        if snapshot!.isEmpty {
+                            // Gönderen olarak belirtilmiş belge yok, o zaman alıcı olarak kontrol et
+                            self.database.collection("Invitations")
+                                .whereField("receiver", isEqualTo: email)
+                                .getDocuments { (receiverSnapshot, receiverError) in
+                                    if let receiverError = receiverError {
+                                        print("Error getting documents: \(receiverError)")
+                                    } else {
+                                        for document in receiverSnapshot!.documents {
+                                            let documentID = document.documentID
+                                            self.updateStatus(documentID: documentID, status: "finished")
+                                        }
+                                    }
+                                }
+                        } else {
+                            for document in snapshot!.documents {
+                                let documentID = document.documentID
+                                self.updateStatus(documentID: documentID, status: "finished")
+                            }
+                        }
+                    }
+                }
+        }
+    }
 
 
 

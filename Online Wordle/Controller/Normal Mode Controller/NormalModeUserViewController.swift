@@ -203,7 +203,7 @@ class NormalModeUserViewController: UITableViewController {
                         
                         switch status {
                         case "accept":
-                            self.showStartMessage(title: "Accepted!", message: "Your game will start!")
+                            self.performSegue(withIdentifier: "toNormalChooseVC", sender: self)
                         case "reject":
                             self.showAlertMessage(title: "Upps..", message: "Try Again!")
                         default:

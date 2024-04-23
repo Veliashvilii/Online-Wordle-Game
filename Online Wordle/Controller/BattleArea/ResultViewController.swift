@@ -8,11 +8,27 @@
 import UIKit
 
 class ResultViewController: UIViewController {
-
+    
+    var isFound: Bool?
+    @IBOutlet var usernameLabel: UILabel!
+    
+    var database = Database()
+    
+    @IBAction func backTapped(_ sender: Any) {
+        self.performSegue(withIdentifier: "toBackToMenuVC", sender: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.database.finishedGame()
 
-        // Do any additional setup after loading the view.
+        if let isFound = isFound {
+            if isFound {
+                usernameLabel.text = "You Won!"
+            } else {
+                usernameLabel.text = "You Lose!"
+            }
+        }
     }
     
 

@@ -8,6 +8,8 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
     var email: String?
     var gameMode: Int?
     
+    var isFound: Bool?
+    
     var remainingTime: Int = 60
 
     @IBOutlet var usernameLabel: UILabel!
@@ -82,14 +84,15 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
                     self.database.pushWord(user: self.email!, word: word)
                     self.group.leave()
                 }
-                //self.database.pushWord(user: self.email!, word: word)
-                // Kelime dosyada bulunuyorsa burada yapılacak işlemleri ekle
             } else {
-                print("Kelime dosyada bulunamadı.")
-                // Kelime dosyada bulunmuyorsa burada yapılacak işlemleri ekle
+                self.showAlertMessage(title: "Warning!", message: "Please enter a valid word") {
+                    print("Kelime dosyada bulunamadı.")
+                }
             }
         } else {
-            print("Kelime girişi yapılmadı.")
+            self.showAlertMessage(title: "Warning!", message: "Please enter a word") {
+                print("Kelime girişi yapılmadı.")
+            }
             // Kelime girilmemişse burada yapılacak işlemleri ekle
         }
     }
@@ -142,12 +145,16 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
                             self.performSegue(withIdentifier: "toBattleAreaVC", sender: nil)
                         } else {
                             print("Segue yapıp kayıp ekranına yönelmeli!")
+                            self.isFound = false
+                            self.performSegue(withIdentifier: "toResultVCFromWord", sender: nil)
                         }
                     }
                 } else {
                     self.database.checkWordMine(user: self.email!) { isFoundWordMine in
                         if isFoundWordMine {
                             print("Abi Sen Oyunu Kazandın Galip Ekranına Segue Atarım!")
+                            self.isFound = true
+                            self.performSegue(withIdentifier: "toResultVCFromWord", sender: nil)
                         } else {
                             self.showAlertMessage(title: "Time's Up", message: "The time has expired. Please proceed to the next steps.") {
                                 self.remainingTime = 60
@@ -178,6 +185,10 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
                 destination.gameMode = self.gameMode
                 destination.username = self.username
                 destination.email = self.email
+            }
+        } else if segue.identifier == "toResultVCFromWord" {
+            if let destination = segue.destination as? ResultViewController {
+                destination.isFound = self.isFound!
             }
         }
     }

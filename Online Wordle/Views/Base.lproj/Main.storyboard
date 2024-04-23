@@ -225,6 +225,7 @@
                         <color key="backgroundColor" red="0.91764705882352937" green="0.96078431372549022" blue="0.83529411764705885" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Random Letter" image="square.and.arrow.down" catalog="system" id="wjf-hv-LDf"/>
+                    <navigationItem key="navigationItem" id="Zc7-jL-NKY"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSn-L9-RAU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -588,6 +589,7 @@
                         <outlet property="usernameLabel" destination="e4H-m1-ave" id="tLF-hV-kwA"/>
                         <outlet property="wordInput" destination="89I-dl-usc" id="xse-8d-vKV"/>
                         <segue destination="fUC-Jn-lao" kind="presentation" identifier="toBattleAreaVC" modalPresentationStyle="fullScreen" id="xmc-sq-tlb"/>
+                        <segue destination="l1A-Ck-XX7" kind="presentation" identifier="toResultVCFromWord" modalPresentationStyle="fullScreen" id="rNR-4w-i4H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dpb-ff-2gM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -648,17 +650,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sonuç Ekranı" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNx-3w-klA">
-                                <rect key="frame" x="103" y="315" width="169" height="36"/>
+                                <rect key="frame" x="103" y="124" width="169" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCC-Iq-hPV">
+                                <rect key="frame" x="67" y="437" width="240" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Back To Menu">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="1" green="0.30980392159999998" blue="0.29803921570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="backTapped:" destination="l1A-Ck-XX7" eventType="touchUpInside" id="o0k-BT-kgW"/>
+                                    <action selector="confirmTapped:" destination="gQ6-0u-aUk" eventType="touchUpInside" id="PNb-GD-gHp"/>
+                                    <action selector="loginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fBS-Kj-W1f"/>
+                                    <segue destination="Dsp-Md-H5F" kind="presentation" identifier="toBackToMenuVC" modalPresentationStyle="fullScreen" id="7fC-vT-j7I"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hjc-4U-zLb"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.91764705882352937" green="0.96078431372549022" blue="0.83529411764705885" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="7fE-OM-2ra"/>
+                    <connections>
+                        <outlet property="usernameLabel" destination="VNx-3w-klA" id="RHf-US-N28"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRF-Bh-fyX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -666,8 +688,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8hI-qf-Q34"/>
+        <segue reference="rNR-4w-i4H"/>
+        <segue reference="3UU-f0-k0b"/>
         <segue reference="uDc-Ia-QdH"/>
+        <segue reference="7fC-vT-j7I"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="elips-2" width="100" height="100"/>
