@@ -362,6 +362,41 @@ class Database {
             }
         }
     }
+    
+    func pushGuess(user: String, answer: String, wordCounter: Int) {
+        let wordCounterString = String(wordCounter)
+        let wordData: [String: Any] = [
+            wordCounterString: answer,
+        ]
+        self.getBattleInfos { rival, documentID in
+            if let rival = rival, let documentID = documentID {
+                let docRef = self.database.collection("Invitations")
+                    .document(documentID)
+                    .collection("Words")
+                    .whereField("rival", isEqualTo: user)
+                    .whereField("user", isEqualTo: rival)
+                    
+                    docRef.getDocuments { (querySnapshot, error) in
+                        if let error = error {
+                            print("Error getting documents: \(error)")
+                            return
+                        } else {
+                            for document in querySnapshot!.documents {
+                                let newDocumentID = document.documentID
+                                self.database
+                                    .collection("Invitations")
+                                    .document(documentID)
+                                    .collection("Words")
+                                    .document(newDocumentID)
+                                    .collection("Guess")
+                                    .addDocument(data: wordData)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
 
 
     

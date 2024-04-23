@@ -177,6 +177,7 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
             if let destination = segue.destination as? BattleAreaViewController {
                 destination.gameMode = self.gameMode
                 destination.username = self.username
+                destination.email = self.email
             }
         }
     }

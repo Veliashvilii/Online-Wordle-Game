@@ -6,6 +6,7 @@ class BattleAreaViewController: UIViewController {
     
     var gameMode: Int?
     var username: String?
+    var email: String?
     var answer: String?
     
     var database = Database()
@@ -198,6 +199,7 @@ class BattleAreaViewController: UIViewController {
                 }
                 displayBox[index].text = "\(guessArray[i])"
             }
+            self.database.pushGuess(user: self.email!, answer: guess.lowercased(), wordCounter: numberOfSubmits)
             numberOfSubmits += 1
             currentAnswer.text = ""
             
