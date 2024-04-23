@@ -10,6 +10,7 @@
 		B906CA602BC144E5009350E0 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B906CA5F2BC144E5009350E0 /* Database.swift */; };
 		B930366B2BBAF5B000B03FCC /* NormalModeChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B930366A2BBAF5B000B03FCC /* NormalModeChooseViewController.swift */; };
 		B930366D2BBAFCC200B03FCC /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = B930366C2BBAFCC200B03FCC /* Room.swift */; };
+		B959F5172BD694E400DDE2BB /* BattleAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B959F5162BD694E400DDE2BB /* BattleAreaViewController.swift */; };
 		B95B38C22BD45F7F00108757 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = B95B38C12BD45F7F00108757 /* words.txt */; };
 		B98D28FA2BB4CC9E0071BDF7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */; };
 		B98D29AA2BB4DAFD0071BDF7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B98D29A92BB4DAFD0071BDF7 /* FirebaseAnalytics */; };
@@ -34,6 +35,7 @@
 		B906CA5F2BC144E5009350E0 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		B930366A2BBAF5B000B03FCC /* NormalModeChooseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalModeChooseViewController.swift; sourceTree = "<group>"; };
 		B930366C2BBAFCC200B03FCC /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		B959F5162BD694E400DDE2BB /* BattleAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleAreaViewController.swift; sourceTree = "<group>"; };
 		B95B38C12BD45F7F00108757 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9947F5D2BB567720061619E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +98,14 @@
 			path = "Normal Mode Controller";
 			sourceTree = "<group>";
 		};
+		B959F5152BD694B100DDE2BB /* BattleArea */ = {
+			isa = PBXGroup;
+			children = (
+				B959F5162BD694E400DDE2BB /* BattleAreaViewController.swift */,
+			);
+			path = BattleArea;
+			sourceTree = "<group>";
+		};
 		B98D29A82BB4DAFD0071BDF7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +131,7 @@
 				B9947F5D2BB567720061619E /* SignUpViewController.swift */,
 				B9C987AA2BBA1977002B77D2 /* RandomLetterViewController.swift */,
 				B9C987AC2BBA1BE0002B77D2 /* GameModeViewController.swift */,
+				B959F5152BD694B100DDE2BB /* BattleArea */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -259,6 +270,7 @@
 				B9C987AD2BBA1BE0002B77D2 /* GameModeViewController.swift in Sources */,
 				B9947F602BB5A51A0061619E /* SettingsViewController.swift in Sources */,
 				B9F9F9E32BB4C52100CB078E /* SceneDelegate.swift in Sources */,
+				B959F5172BD694E400DDE2BB /* BattleAreaViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -331,6 +331,37 @@ class Database {
             }
         }
     }
+    
+    func takeAnswer(user: String, completion: @escaping (String?) -> Void) {
+        /**
+         The "checkWord" function is designed to retrieve words submitted by a specific user from the "Words" subcollection within a document in the "Invitations" collection in Firebase. It takes the user's ID as a parameter and queries the database to fetch all words submitted by this user in the current battle. If any words are found, it constructs an array containing these words and calls the completion block with the array. If no words are found or an error occurs, it calls the completion block with a nil value. This function enables checking the words submitted by a user during a battle or game.
+         */
+        self.getBattleInfos { rival, documentID in
+            if let rival = rival, let documentID = documentID {
+                self.database.collection("Invitations").document(documentID)
+                    .collection("Words")
+                    .whereField("user", isEqualTo: rival)
+                    .whereField("rival", isEqualTo: user)
+                    .getDocuments { (snapshot, error) in
+                        if let error = error {
+                            print("Error getting documents: \(error)")
+                            completion(nil)
+                        } else {
+                            var answer: String?
+                            for document in snapshot!.documents {
+                                let data = document.data()
+                                if let word = data["word"] as? String {
+                                    answer = word
+                                }
+                            }
+                            completion(answer)
+                        }
+                    }
+            } else {
+                completion(nil)
+            }
+        }
+    }
 
 
     

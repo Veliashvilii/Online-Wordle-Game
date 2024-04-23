@@ -257,7 +257,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQz-OQ-RMa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3201" y="-1232"/>
+            <point key="canvasLocation" x="4308" y="-1227"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="DeJ-Gr-kNI">
@@ -584,11 +584,28 @@
                         <outlet property="timeLabel" destination="71F-5j-cly" id="Qvp-TB-1Is"/>
                         <outlet property="usernameLabel" destination="e4H-m1-ave" id="tLF-hV-kwA"/>
                         <outlet property="wordInput" destination="89I-dl-usc" id="xse-8d-vKV"/>
+                        <segue destination="fUC-Jn-lao" kind="presentation" identifier="toBattleAreaVC" modalPresentationStyle="fullScreen" id="xmc-sq-tlb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dpb-ff-2gM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5285.6000000000004" y="-376.46176911544228"/>
+        </scene>
+        <!--Battle Area View Controller-->
+        <scene sceneID="Ycq-0L-tgQ">
+            <objects>
+                <viewController id="fUC-Jn-lao" customClass="BattleAreaViewController" customModule="Online_Wordle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="V7U-3E-X4e">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="s4a-wE-dsq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="2N4-Ja-hJR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Czl-tl-LAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6302" y="-376"/>
         </scene>
     </scenes>
     <resources>

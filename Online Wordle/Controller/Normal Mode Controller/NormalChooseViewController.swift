@@ -139,6 +139,7 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
                     self.database.checkWordMine(user: self.email!) { isFoundWordMine in
                         if isFoundWordMine {
                             print("Abi Oyunu Başlatmak İçin Segue Atarım Şimdi!")
+                            self.performSegue(withIdentifier: "toBattleAreaVC", sender: nil)
                         } else {
                             print("Segue yapıp kayıp ekranına yönelmeli!")
                         }
@@ -167,6 +168,17 @@ class NormalChooseViewController: UIViewController, UITextFieldDelegate {
             completion()
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toBattleAreaVC" {
+            if let destination = segue.destination as? BattleAreaViewController {
+                destination.gameMode = self.gameMode
+                destination.username = self.username
+            }
+        }
     }
     
     
