@@ -22,7 +22,7 @@ class BattleAreaViewController: UIViewController {
     
     override func loadView() {
         view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 236/255, green: 245/255, blue: 216/255, alpha: 1.0)
         
         usernameLabel = UILabel()
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -160,9 +160,14 @@ class BattleAreaViewController: UIViewController {
     }
     
     @objc func submitTapped(_ sender: UIButton){
+
         guard let guess = currentAnswer?.text else {return}
         
-        //Gerçek kelime kontrolü
+        if isWordInFile(word: guess.lowercased(), fileName: "words.txt") == false {
+            showError()
+            currentAnswer.text = ""
+            return
+        }
         
         if guess.count != self.gameMode {
             showError()
@@ -170,29 +175,46 @@ class BattleAreaViewController: UIViewController {
             return
         }
         
-        let guessArray = Array(guess)
-        let answerArray = Array(self.answer!)
-        
-        for i in 0..<self.gameMode! {
-            let index = (numberOfSubmits*self.gameMode!) + (i)
-            if guessArray[i] == answerArray [i] {
-                displayBox[index].backgroundColor = .green
-            } else if answerArray.contains(guessArray[i]) {
-                displayBox[index].backgroundColor = .yellow
-            } else {
-                displayBox[index].backgroundColor = .gray
+        if let answer = self.answer {
+            print("Aranan Cevap: \(answer)")
+            let upperAnswer = answer.uppercased()
+            let guessArray = Array(guess)
+            let answerArray = Array(upperAnswer)
+            
+            print("Tahmin: \(guessArray)")
+            print("Cevap: \(answerArray)")
+            
+            for i in 0..<self.gameMode! {
+                let index = (numberOfSubmits*self.gameMode!)+(i)
+                if guessArray[i] == answerArray [i] {
+                    displayBox[index].backgroundColor =  UIColor(red: 34/255, green: 139/255, blue: 34/255, alpha: 1.0)
+                    displayBox[index].textColor = .white
+                } else if answerArray.contains(guessArray[i]) {
+                    displayBox[index].backgroundColor = UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1.0)
+                    displayBox[index].textColor = .white
+                } else {
+                    displayBox[index].backgroundColor = UIColor(red: 105/255, green: 105/255, blue: 105/255, alpha: 1.0)
+                    displayBox[index].textColor = .white
+                }
+                displayBox[index].text = "\(guessArray[i])"
             }
-            displayBox[index].text = "\(guessArray[i])"
+            numberOfSubmits += 1
+            currentAnswer.text = ""
+            
+            if guess == upperAnswer {
+                //Eğer kullanıcı doğru bilirse yapılacak işlemler
+                print("Oyun Sonuç Ekranına Gidilmeli")
+                showMessage(title: "Cong!", message: "You found the answer") {
+                    self.performSegue(withIdentifier: "toResultVC", sender: nil)
+                }
+                return
+            }
+        } else {
+            print("Cevap Değeri Bulunamadı!")
         }
-        numberOfSubmits += 1
-        currentAnswer.text = ""
         
-        if guess == answer {
-            //Eğer kullanıcı doğru bilirse yapılacak işlemler
-            print("Oyun Sonuç Ekranına Gidilmeli")
-            showError()
-            return
-        }
+        // Tahmin doğru değilse ve tahmin hakkı dolmadıysa, numberOfSubmits değerini artır
+
         
         if numberOfSubmits == self.gameMode! {
             print("Kelime bilme hakkı kalmadı")
@@ -202,13 +224,37 @@ class BattleAreaViewController: UIViewController {
         
     }
     
-    
+    func isWordInFile(word: String, fileName: String) -> Bool {
+        guard let filePath = Bundle.main.path(forResource: fileName, ofType: nil) else {
+            print("Dosya bulunamadı.")
+            return false
+        }
+        
+        do {
+            let content = try String(contentsOfFile: filePath, encoding: .utf8)
+            let words = content.components(separatedBy: .whitespacesAndNewlines)
+            return words.contains(word)
+        } catch {
+            print("Dosya içeriği okunamadı: \(error.localizedDescription)")
+            return false
+        }
+    }
+
     
     
     func showError(){
         let alertVC = UIAlertController(title: "Error", message: "Invalid Input", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel))
         present(alertVC, animated: true)
+    }
+    
+    func showMessage(title: String, message: String, completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completion()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
 

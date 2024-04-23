@@ -602,10 +602,38 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="2N4-Ja-hJR"/>
+                    <connections>
+                        <segue destination="l1A-Ck-XX7" kind="presentation" identifier="toResultVC" modalPresentationStyle="fullScreen" id="2Qc-9P-9WB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Czl-tl-LAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6302" y="-376"/>
+        </scene>
+        <!--Result View Controller-->
+        <scene sceneID="ia6-3C-uZS">
+            <objects>
+                <viewController id="l1A-Ck-XX7" customClass="ResultViewController" customModule="Online_Wordle" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eZk-S8-HTT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sonuç Ekranı" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNx-3w-klA">
+                                <rect key="frame" x="103" y="315" width="169" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hjc-4U-zLb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7fE-OM-2ra"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lRF-Bh-fyX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7415" y="-376"/>
         </scene>
     </scenes>
     <resources>

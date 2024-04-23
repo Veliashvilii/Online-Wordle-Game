@@ -12,6 +12,7 @@
 		B930366D2BBAFCC200B03FCC /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = B930366C2BBAFCC200B03FCC /* Room.swift */; };
 		B959F5172BD694E400DDE2BB /* BattleAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B959F5162BD694E400DDE2BB /* BattleAreaViewController.swift */; };
 		B95B38C22BD45F7F00108757 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = B95B38C12BD45F7F00108757 /* words.txt */; };
+		B96910EA2BD7D72D00CBA2AD /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96910E92BD7D72D00CBA2AD /* ResultViewController.swift */; };
 		B98D28FA2BB4CC9E0071BDF7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */; };
 		B98D29AA2BB4DAFD0071BDF7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B98D29A92BB4DAFD0071BDF7 /* FirebaseAnalytics */; };
 		B98D29AC2BB4DAFD0071BDF7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B98D29AB2BB4DAFD0071BDF7 /* FirebaseAuth */; };
@@ -37,6 +38,7 @@
 		B930366C2BBAFCC200B03FCC /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		B959F5162BD694E400DDE2BB /* BattleAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleAreaViewController.swift; sourceTree = "<group>"; };
 		B95B38C12BD45F7F00108757 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
+		B96910E92BD7D72D00CBA2AD /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		B98D28F92BB4CC9E0071BDF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9947F5D2BB567720061619E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B9947F5F2BB5A51A0061619E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				B959F5162BD694E400DDE2BB /* BattleAreaViewController.swift */,
+				B96910E92BD7D72D00CBA2AD /* ResultViewController.swift */,
 			);
 			path = BattleArea;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				B9F9F9E12BB4C52100CB078E /* AppDelegate.swift in Sources */,
 				B930366B2BBAF5B000B03FCC /* NormalModeChooseViewController.swift in Sources */,
 				B9E3B73C2BBB45E200B661F4 /* NormalModeUserViewController.swift in Sources */,
+				B96910EA2BD7D72D00CBA2AD /* ResultViewController.swift in Sources */,
 				B9F7C0092BD2EF07003B8E49 /* NormalChooseViewController.swift in Sources */,
 				B930366D2BBAFCC200B03FCC /* Room.swift in Sources */,
 				B906CA602BC144E5009350E0 /* Database.swift in Sources */,
