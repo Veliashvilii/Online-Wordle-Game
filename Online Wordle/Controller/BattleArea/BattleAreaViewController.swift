@@ -9,15 +9,19 @@ class BattleAreaViewController: UIViewController {
     var email: String?
     var answer: String?
     
+    var timer: Timer?
+    var remainingTime: Int = 60
+    var shortRemainingTime: Int = 10
+    
     var database = Database()
     
     var usernameLabel: UILabel!
+    var timeLabel: UILabel!
     var textLabel: UILabel!
     var displayBox = [UILabel]()
     var currentAnswer: UITextField!
     var keyboard = [UIButton]()
     var recentlyPressed = [UIButton]()
-    //var answer: String = ""
     var winstreak = 0
     var numberOfSubmits = 0
     
@@ -151,6 +155,33 @@ class BattleAreaViewController: UIViewController {
         }
     }
     
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTime() {
+        if remainingTime > 0 {
+            remainingTime -= 1
+        } else {
+            timer?.invalidate()
+            self.showMessage(title: "Warning!", message: "İf you don't enter a word within 10 seconds, you will lose the game.") {
+                // 10 saniyelik sayaç başlatılacaktır.
+                self.timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(self.updateShortTime), userInfo: nil, repeats: true)
+            }
+        }
+    }
+    
+    @objc func updateShortTime() {
+        if shortRemainingTime > 0 {
+            shortRemainingTime -= 1
+        } else {
+            timer?.invalidate()
+            self.showMessage(title: "Upps..!", message: "Game Over..") {
+                self.performSegue(withIdentifier: "toResultVC", sender: nil)
+            }
+        }
+    }
+    
     @objc func letterButtonTapped(_ sender: UIButton){
         guard let buttonTitle = sender.titleLabel?.text else{return}
         currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
@@ -163,6 +194,9 @@ class BattleAreaViewController: UIViewController {
     }
     
     @objc func submitTapped(_ sender: UIButton){
+        remainingTime = 60
+        shortRemainingTime = 10
+        startTimer()
 
         guard let guess = currentAnswer?.text else {return}
         
